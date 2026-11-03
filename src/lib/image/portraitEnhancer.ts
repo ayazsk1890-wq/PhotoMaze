@@ -234,9 +234,167 @@ export function enhanceImageData(
   return out;
 }
 
+let enhancerWorker: Worker | null = null;
+
+/**
+ * Creates or reuses a dedicated background Web Worker for heavy pixel enhancement
+ */
+function getEnhancerWorker(): Worker | null {
+  if (typeof window === "undefined" || typeof Worker === "undefined" || typeof Blob === "undefined") {
+    return null;
+  }
+  if (enhancerWorker) return enhancerWorker;
+
+  try {
+    const workerCode = `
+      function isSkinPixel(r, g, b) {
+        if (r <= g || r <= b || (r - b) < 12) return { isSkin: false, weight: 0 };
+        const y = 0.299 * r + 0.587 * g + 0.114 * b;
+        if (y < 35 || y > 248) return { isSkin: false, weight: 0 };
+        const cb = -0.168736 * r - 0.331264 * g + 0.5 * b + 128;
+        const cr = 0.5 * r - 0.418688 * g - 0.081312 * b + 128;
+        const distCb = (cb - 105) / 28;
+        const distCr = (cr - 154) / 22;
+        const distanceSq = distCb * distCb + distCr * distCr;
+        if (distanceSq <= 1.0) return { isSkin: true, weight: 1.0 - distanceSq * 0.5 };
+        if (distanceSq <= 2.25) return { isSkin: true, weight: Math.max(0, 1.0 - (distanceSq - 1.0) / 1.25) };
+        return { isSkin: false, weight: 0 };
+      }
+
+      function boxBlur(data, width, height, radius) {
+        const output = new Uint8ClampedArray(data.length);
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            let rSum = 0, gSum = 0, bSum = 0, count = 0;
+            for (let dy = -radius; dy <= radius; dy++) {
+              const ny = y + dy;
+              if (ny < 0 || ny >= height) continue;
+              const rowOffset = ny * width * 4;
+              for (let dx = -radius; dx <= radius; dx++) {
+                const nx = x + dx;
+                if (nx < 0 || nx >= width) continue;
+                const idx = rowOffset + nx * 4;
+                rSum += data[idx];
+                gSum += data[idx + 1];
+                bSum += data[idx + 2];
+                count++;
+              }
+            }
+            const outIdx = (y * width + x) * 4;
+            output[outIdx] = Math.round(rSum / count);
+            output[outIdx + 1] = Math.round(gSum / count);
+            output[outIdx + 2] = Math.round(bSum / count);
+            output[outIdx + 3] = data[outIdx + 3];
+          }
+        }
+        return output;
+      }
+
+      self.onmessage = function(e) {
+        const { buffer, width, height, settings } = e.data;
+        const src = new Uint8ClampedArray(buffer);
+        const dst = new Uint8ClampedArray(src.length);
+
+        const skinSmoothFactor = (settings.skinSmoothing / 100) * 0.75;
+        const blemishFactor = (settings.blemishReduction / 100) * 0.6;
+        const lightingFactor = settings.lightingCorrection / 100;
+        const sharpnessFactor = (settings.sharpness / 100) * 0.8;
+        const noiseFactor = (settings.noiseReduction / 100) * 0.5;
+        const tempFactor = settings.colorCorrection;
+        const brightnessOffset = settings.brightness * 2.55;
+        const contrastFactor = (100 + settings.contrast) / 100;
+
+        const blurRadius = Math.max(1, Math.min(3, Math.round(width / 350)));
+        const blurred = boxBlur(src, width, height, blurRadius);
+
+        for (let i = 0; i < src.length; i += 4) {
+          let r = src[i];
+          let g = src[i + 1];
+          let b = src[i + 2];
+          const a = src[i + 3];
+
+          if (a === 0) continue;
+
+          const blurredR = blurred[i];
+          const blurredG = blurred[i + 1];
+          const blurredB = blurred[i + 2];
+
+          const { isSkin, weight: skinWeight } = isSkinPixel(r, g, b);
+
+          if (isSkin && (skinSmoothFactor > 0 || blemishFactor > 0)) {
+            const diff = Math.abs(r - blurredR) + Math.abs(g - blurredG) + Math.abs(b - blurredB);
+            const edgeWeight = Math.max(0, 1.0 - diff / 95);
+            const effectiveSmooth = Math.min(0.85, (skinSmoothFactor + blemishFactor) * skinWeight * edgeWeight);
+            r = Math.round(r * (1 - effectiveSmooth) + blurredR * effectiveSmooth);
+            g = Math.round(g * (1 - effectiveSmooth) + blurredG * effectiveSmooth);
+            b = Math.round(b * (1 - effectiveSmooth) + blurredB * effectiveSmooth);
+          }
+
+          if (noiseFactor > 0) {
+            const noiseDiff = Math.abs(r - blurredR) + Math.abs(g - blurredG) + Math.abs(b - blurredB);
+            if (noiseDiff < 25) {
+              const noiseWeight = (1 - noiseDiff / 25) * noiseFactor;
+              r = Math.round(r * (1 - noiseWeight) + blurredR * noiseWeight);
+              g = Math.round(g * (1 - noiseWeight) + blurredG * noiseWeight);
+              b = Math.round(b * (1 - noiseWeight) + blurredB * noiseWeight);
+            }
+          }
+
+          if (sharpnessFactor > 0) {
+            const highR = r - blurredR;
+            const highG = g - blurredG;
+            const highB = b - blurredB;
+            if (Math.abs(highR) > 2 || Math.abs(highG) > 2 || Math.abs(highB) > 2) {
+              const sharpMask = isSkin ? sharpnessFactor * 0.45 : sharpnessFactor;
+              r = Math.min(255, Math.max(0, Math.round(r + highR * sharpMask)));
+              g = Math.min(255, Math.max(0, Math.round(g + highG * sharpMask)));
+              b = Math.min(255, Math.max(0, Math.round(b + highB * sharpMask)));
+            }
+          }
+
+          if (lightingFactor > 0) {
+            const luma = 0.299 * r + 0.587 * g + 0.114 * b;
+            if (luma < 170) {
+              const shadowBoost = ((170 - luma) / 170) * (lightingFactor * 32);
+              r = Math.min(255, r + shadowBoost);
+              g = Math.min(255, g + shadowBoost);
+              b = Math.min(255, b + shadowBoost);
+            }
+          }
+
+          if (tempFactor !== 0) {
+            const tempDelta = tempFactor * 0.4;
+            r = Math.min(255, Math.max(0, r + tempDelta));
+            b = Math.min(255, Math.max(0, b - tempDelta));
+          }
+
+          if (brightnessOffset !== 0 || contrastFactor !== 1) {
+            r = Math.min(255, Math.max(0, Math.round((r - 128) * contrastFactor + 128 + brightnessOffset)));
+            g = Math.min(255, Math.max(0, Math.round((g - 128) * contrastFactor + 128 + brightnessOffset)));
+            b = Math.min(255, Math.max(0, Math.round((b - 128) * contrastFactor + 128 + brightnessOffset)));
+          }
+
+          dst[i] = r;
+          dst[i + 1] = g;
+          dst[i + 2] = b;
+          dst[i + 3] = a;
+        }
+
+        self.postMessage({ buffer: dst.buffer }, [dst.buffer]);
+      };
+    `;
+    const blob = new Blob([workerCode], { type: "application/javascript" });
+    enhancerWorker = new Worker(URL.createObjectURL(blob));
+    return enhancerWorker;
+  } catch (err) {
+    console.warn("Portrait enhancer worker initialization fallback:", err);
+    return null;
+  }
+}
+
 /**
  * Enhances an image element or image URL and returns a processed data URL.
- * Runs 100% in the user's browser with zero cloud latency or cost.
+ * Offloads CPU-intensive loops to a Web Worker when supported, with non-blocking fallback.
  */
 export async function enhanceImageElement(
   imageSource: HTMLImageElement | string,
@@ -246,20 +404,30 @@ export async function enhanceImageElement(
 
   if (typeof imageSource === "string") {
     img = new Image();
-    img.crossOrigin = "anonymous";
+    if (!imageSource.startsWith("data:") && !imageSource.startsWith("blob:")) {
+      img.crossOrigin = "anonymous";
+    }
     await new Promise<void>((resolve, reject) => {
       img.onload = () => resolve();
       img.onerror = () => reject(new Error("Failed to load image for portrait enhancement"));
       img.src = imageSource;
+      if (img.complete && img.naturalWidth > 0) resolve();
     });
   } else {
     img = imageSource;
   }
 
-  const canvas = document.createElement("canvas");
-  const width = img.naturalWidth || img.width;
-  const height = img.naturalHeight || img.height;
+  // Adaptive working resolution to preserve 60 FPS UI responsiveness
+  const maxDim = 1200;
+  let width = img.naturalWidth || img.width;
+  let height = img.naturalHeight || img.height;
+  if (width > maxDim || height > maxDim) {
+    const scale = maxDim / Math.max(width, height);
+    width = Math.round(width * scale);
+    height = Math.round(height * scale);
+  }
 
+  const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
 
@@ -267,9 +435,32 @@ export async function enhanceImageElement(
   if (!ctx) throw new Error("Could not create 2D canvas context");
 
   ctx.drawImage(img, 0, 0, width, height);
-
   const rawImageData = ctx.getImageData(0, 0, width, height);
-  const enhancedImageData = enhanceImageData(rawImageData, settings);
+
+  // Attempt Web Worker execution for non-blocking UI
+  const worker = getEnhancerWorker();
+  let enhancedImageData: ImageData;
+
+  if (worker) {
+    try {
+      const bufferCopy = rawImageData.data.buffer.slice(0);
+      const enhancedBuffer = await new Promise<ArrayBuffer>((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error("Worker enhancement timed out")), 2000);
+        const handleMsg = (ev: MessageEvent) => {
+          clearTimeout(timeout);
+          worker.removeEventListener("message", handleMsg);
+          resolve(ev.data.buffer);
+        };
+        worker.addEventListener("message", handleMsg);
+        worker.postMessage({ buffer: bufferCopy, width, height, settings }, [bufferCopy]);
+      });
+      enhancedImageData = new ImageData(new Uint8ClampedArray(enhancedBuffer), width, height);
+    } catch {
+      enhancedImageData = enhanceImageData(rawImageData, settings);
+    }
+  } else {
+    enhancedImageData = enhanceImageData(rawImageData, settings);
+  }
 
   ctx.putImageData(enhancedImageData, 0, 0);
 

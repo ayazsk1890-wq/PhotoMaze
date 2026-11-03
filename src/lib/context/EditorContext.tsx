@@ -477,12 +477,14 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
       setHistory([]);
 
       try {
-        sessionStorage.setItem("ppm_uploaded_image_src", dataUrl);
-        sessionStorage.setItem("ppm_original_image_src", dataUrl);
+        if (dataUrl.length < 2_000_000) {
+          sessionStorage.setItem("ppm_uploaded_image_src", dataUrl);
+          sessionStorage.setItem("ppm_original_image_src", dataUrl);
+        }
         sessionStorage.removeItem("ppm_transparent_cutout_url");
         sessionStorage.setItem("ppm_uploaded_image_meta", JSON.stringify(metadata));
       } catch {
-        // Ignore storage limits
+        // Safe fallback for quota limits
       }
 
       setUploadState({ isUploading: false, progressPercent: 0, stageMessage: "" });

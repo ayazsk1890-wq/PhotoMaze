@@ -1,17 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, Globe2, ArrowRight, ShieldCheck, Check } from "lucide-react";
+import Link from "next/link";
+import { Search, Globe2, ArrowRight } from "lucide-react";
 import { POPULAR_PASSPORT_SPECS } from "@/lib/constants/countries";
 
 export function SupportedCountriesSection() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("all");
 
-  // Extended country list for rich browsing
   const countryDatabase = [
     ...POPULAR_PASSPORT_SPECS,
     {
+      id: "de-passport",
       country: "Germany",
       countryCode: "DE",
       documentType: "Passport" as const,
@@ -24,8 +25,10 @@ export function SupportedCountriesSection() {
       headMaxPercentage: 0.8,
       aspectRatio: "35:45",
       region: "europe",
+      notes: "Biometric passport standard. Light gray background.",
     },
     {
+      id: "fr-passport",
       country: "France",
       countryCode: "FR",
       documentType: "Passport" as const,
@@ -38,8 +41,10 @@ export function SupportedCountriesSection() {
       headMaxPercentage: 0.8,
       aspectRatio: "35:45",
       region: "europe",
+      notes: "Light blue or light gray background. No white background.",
     },
     {
+      id: "sg-passport",
       country: "Singapore",
       countryCode: "SG",
       documentType: "Passport" as const,
@@ -52,8 +57,10 @@ export function SupportedCountriesSection() {
       headMaxPercentage: 0.8,
       aspectRatio: "35:45",
       region: "asia",
+      notes: "ICAO standard. Pure white background.",
     },
     {
+      id: "ae-visa",
       country: "United Arab Emirates",
       countryCode: "AE",
       documentType: "Visa" as const,
@@ -64,122 +71,129 @@ export function SupportedCountriesSection() {
       backgroundColor: "white" as const,
       headMinPercentage: 0.7,
       headMaxPercentage: 0.8,
-      aspectRatio: "2:3",
-      region: "middle-east",
+      aspectRatio: "40:60",
+      region: "asia",
+      notes: "UAE Entry Permit & Residence Visa. Pure white background.",
     },
   ];
 
-  const filteredCountries = countryDatabase.filter((c) => {
+  const filteredCountries = countryDatabase.filter((spec) => {
     const matchesSearch =
-      c.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.countryCode.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.documentType.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesSearch;
+      spec.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      spec.documentType.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      spec.countryCode.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesRegion =
+      selectedRegion === "all" ||
+      ("region" in spec && (spec as any).region === selectedRegion);
+
+    return matchesSearch && matchesRegion;
   });
 
   return (
-    <section id="countries" className="py-16 sm:py-24 bg-slate-50/60 border-t border-slate-200/80">
+    <section id="countries" className="py-20 sm:py-28 bg-[#0B0D12] border-t border-[#292F3A]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-xs font-bold uppercase tracking-wider text-violet-600 bg-violet-50 px-3 py-1 rounded-full border border-violet-200">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#8B7CFF] mb-2 block">
             Global Standards Database
           </span>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Supported Country Photo Dimensions
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#F5F7FA]">
+            Supported Country Specifications
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-slate-600">
-            Pre-configured with official government and embassy rules for passports, visas, driving licenses, and citizen IDs worldwide.
+          <p className="mt-3 text-sm sm:text-base text-[#9CA3AF]">
+            Search by country name, document type, or dimensions. Pre-configured with official millimeter and 300 DPI resolutions.
           </p>
+        </div>
 
-          {/* Search Box */}
-          <div className="mt-8 relative max-w-lg mx-auto">
-            <Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+        {/* Search Bar & Region Filter */}
+        <div className="max-w-2xl mx-auto mb-10 flex flex-col sm:flex-row gap-3">
+          <div className="relative flex-1">
+            <Search className="w-4 h-4 text-[#697386] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
-              placeholder="Search country (e.g. USA, UK, India, Schengen, Canada)..."
+              placeholder="Search country (e.g. India, United States, Canada, UK)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white border border-slate-300 rounded-2xl pl-12 pr-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              className="w-full bg-[#171B24] border border-[#292F3A] rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-[#F5F7FA] placeholder-[#697386] focus:outline-none focus:border-[#8B7CFF] transition-colors"
             />
+          </div>
+
+          <div className="flex gap-1.5 p-1 rounded-xl bg-[#171B24] border border-[#292F3A] overflow-x-auto">
+            {["all", "americas", "asia", "europe"].map((region) => (
+              <button
+                key={region}
+                type="button"
+                onClick={() => setSelectedRegion(region)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize whitespace-nowrap transition-colors ${
+                  selectedRegion === region
+                    ? "bg-[#8B7CFF] text-white shadow-sm"
+                    : "text-[#9CA3AF] hover:text-[#F5F7FA]"
+                }`}
+              >
+                {region === "all" ? "All Regions" : region}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Countries Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {filteredCountries.map((item) => (
+        {/* Country Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {filteredCountries.map((spec) => (
             <div
-              key={item.country + item.documentType}
-              className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md hover:border-blue-400 transition-all flex flex-col justify-between"
+              key={spec.id}
+              className="rounded-2xl bg-[#11141B] border border-[#292F3A] p-5 hover:border-[#3B4352] transition-colors flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-extrabold px-2.5 py-1 rounded-md bg-slate-100 text-slate-700">
-                    {item.countryCode}
-                  </span>
-                  <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
-                    {item.documentType}
+                  <span className="font-bold text-sm text-[#F5F7FA]">{spec.country}</span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-[#171B24] text-[#8B7CFF] border border-[#292F3A]">
+                    {spec.countryCode}
                   </span>
                 </div>
 
-                <h3 className="font-bold text-base text-slate-900 mb-1">
-                  {item.country}
-                </h3>
+                <div className="text-xs text-[#9CA3AF] mb-4">
+                  {spec.documentType} Standard
+                </div>
 
-                <div className="space-y-1 text-xs text-slate-500 mt-2">
-                  <div className="flex justify-between">
-                    <span>Physical Size:</span>
-                    <span className="font-semibold text-slate-800">
-                      {item.widthMm} × {item.heightMm} mm
+                <div className="space-y-1.5 text-xs mb-5">
+                  <div className="flex justify-between py-1 border-b border-[#292F3A]/60">
+                    <span className="text-[#697386]">Dimensions</span>
+                    <span className="font-mono text-[#F5F7FA]">
+                      {spec.widthMm} × {spec.heightMm} mm
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Pixel Dimensions:</span>
-                    <span className="font-semibold text-slate-800">
-                      {item.widthPx300Dpi} × {item.heightPx300Dpi} px
+                  <div className="flex justify-between py-1 border-b border-[#292F3A]/60">
+                    <span className="text-[#697386]">300 DPI Size</span>
+                    <span className="font-mono text-[#F5F7FA]">
+                      {spec.widthPx300Dpi} × {spec.heightPx300Dpi} px
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Background:</span>
-                    <span className="font-semibold text-slate-800 capitalize">
-                      {item.backgroundColor.replace("-", " ")}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Head Height:</span>
-                    <span className="font-semibold text-slate-800">
-                      {Math.round(item.headMinPercentage * 100)}% - {Math.round(item.headMaxPercentage * 100)}%
+                  <div className="flex justify-between py-1">
+                    <span className="text-[#697386]">Background</span>
+                    <span className="capitalize text-[#34D399]">
+                      {spec.backgroundColor.replace("-", " ")}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-slate-100">
-                <a
-                  href="#upload-card"
-                  className="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 text-xs font-semibold transition-colors"
-                >
-                  <span>Select {item.country}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </a>
-              </div>
+              <Link
+                href="/editor"
+                prefetch={false}
+                onClick={() => {
+                  try {
+                    sessionStorage.setItem("ppm_selected_spec_id", spec.id);
+                  } catch {}
+                }}
+                className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-[#171B24] hover:bg-[#1C2230] border border-[#292F3A] text-xs font-semibold text-[#F5F7FA] transition-colors"
+              >
+                <span>Use this spec</span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#8B7CFF]" />
+              </Link>
             </div>
           ))}
         </div>
-
-        {filteredCountries.length === 0 && (
-          <div className="text-center py-12">
-            <Globe2 className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-            <p className="text-slate-600 font-medium">No countries match your search.</p>
-            <button
-              onClick={() => setSearchQuery("")}
-              className="mt-2 text-xs font-bold text-blue-600 hover:underline"
-            >
-              Reset search
-            </button>
-          </div>
-        )}
       </div>
     </section>
   );
 }
-

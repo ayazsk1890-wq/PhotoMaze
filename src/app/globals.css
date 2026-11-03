@@ -3,62 +3,73 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222 47% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222 47% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.75rem;
-  }
+  :root, .dark {
+    /* Main Dark Design Tokens */
+    --background: 223 24% 5.5%; /* #0B0D12 */
+    --foreground: 216 33% 97%;  /* #F5F7FA */
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 6.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 6.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --card: 221 21% 11.6%;       /* #171B24 */
+    --card-foreground: 216 33% 97%;
+
+    --popover: 221 21% 11.6%;    /* #171B24 */
+    --popover-foreground: 216 33% 97%;
+
+    --primary: 247 100% 74%;     /* #8B7CFF */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 221 23% 8.6%;   /* #11141B */
+    --secondary-foreground: 216 33% 97%;
+
+    --muted: 219 17% 19.4%;      /* #292F3A */
+    --muted-foreground: 218 11% 65%; /* #9CA3AF */
+
+    --accent: 247 100% 74%;      /* #8B7CFF */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 91% 71%;    /* #F87171 */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 219 17% 19.4%;     /* #292F3A */
+    --input: 221 26% 15%;        /* #1C2230 */
+    --ring: 247 100% 74%;        /* #8B7CFF */
+    --radius: 0.75rem;
   }
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    color-scheme: dark;
   }
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    background-color: #0B0D12;
+    color: #F5F7FA;
     font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
+/* Precision Dark Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0D12;
+}
+::-webkit-scrollbar-thumb {
+  background: #292F3A;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3B4352;
+}
+
+/* Sleek range sliders for portrait retouching */
+input[type="range"] {
+  accent-color: #8B7CFF;
+}

@@ -4,127 +4,101 @@ import {
   ScanFace,
   Shirt,
   Sparkles,
-  Grid,
-  FileDown,
   ShieldCheck,
+  Printer,
+  FileCheck,
   CheckCircle2,
 } from "lucide-react";
 
 export function FeaturesShowcase() {
-  const features = [
+  const benefits = [
     {
       icon: Scissors,
-      title: "1-Click AI Background Removal",
-      badge: "AI Powered",
+      title: "AI-Powered Photo Editing",
       description:
-        "Sub-pixel alpha matting cleanly isolates fine hair, ear contours, and shoulder edges. Instantly replaces background with compliant pure white, light gray, blue, or red.",
-      points: ["Clean fine hair isolation", "Shadow & artifact elimination", "Complies with strict embassy rules"],
-      color: "from-blue-600 to-cyan-500",
-      accent: "bg-blue-50 text-blue-700 border-blue-200",
+        "Sub-pixel neural matting isolates subject hair and contours. Instantly separates foreground from complex backgrounds with zero manual tracing.",
+      tags: ["Local Segmentation", "Hair Edge Matting"],
     },
     {
       icon: ScanFace,
-      title: "ICAO Biometric Auto-Crop",
-      badge: "Standardized",
+      title: "Passport-Ready Dimensions",
       description:
-        "Built-in face detection aligns eye height to 55%-65% of the frame and locks head height to exactly 70%-80% according to ICAO Document 9303 standards.",
-      points: ["Automatic eye-level leveling", "Chin-to-crown ratio enforcement", "Prevents online portal rejection"],
-      color: "from-indigo-600 to-blue-500",
-      accent: "bg-indigo-50 text-indigo-700 border-indigo-200",
+        "Calculated against 100+ government standards. Automatically verifies 70-80% chin-to-crown coverage and horizontal facial midline alignment.",
+      tags: ["Indian 35×45mm", "US 2×2 Inch", "Schengen 35×45mm"],
     },
     {
       icon: Shirt,
-      title: "AI Suit & Formal Clothing Changer",
-      badge: "Cutout.pro Feature",
+      title: "Studio Portrait Transformation",
       description:
-        "No need to change into formal clothes before taking your selfie. Choose from dozens of modern business suits, collared shirts, and blazers tailored for men, women, and children.",
-      points: ["Men's & Women's formal suits", "Children's collared attire", "Natural neck & collar fitting"],
-      color: "from-violet-600 to-indigo-500",
-      accent: "bg-violet-50 text-violet-700 border-violet-200",
+        "Convert casual selfies into professional studio portraits. Apply formal dark business suits and subtle, calibrated portrait lighting retouching.",
+      tags: ["Men's & Women's Suits", "Lighting Calibration"],
     },
     {
       icon: Sparkles,
-      title: "300 DPI Ultra-HD Enhancement",
-      badge: "Print Ready",
+      title: "Background Customization",
       description:
-        "Low-light smartphone selfies are automatically upscaled to 300 DPI with smart noise suppression and tone balancing without modifying biometric facial anatomy.",
-      points: ["Lossless 300 DPI output", "Shadow reduction on face", "Natural skin tone preservation"],
-      color: "from-purple-600 to-pink-500",
-      accent: "bg-purple-50 text-purple-700 border-purple-200",
+        "Choose official embassy colors: pure white, light gray, royal blue, or crimson red. Export transparent cutouts for graphic design workflows.",
+      tags: ["Official White", "Light Gray", "Transparent PNG"],
     },
     {
-      icon: Grid,
-      title: "Custom Photo Sheet Printing Engine",
-      badge: "Core Feature",
+      icon: ShieldCheck,
+      title: "Privacy-Conscious Processing",
       description:
-        "Print multiple passport copies on standard photo paper (4×6\", 5×7\", 6×8\", A4, Letter). Pack 4, 6, 8, or 12 photos on one sheet with scissors cut guides.",
-      points: ["Standard 4×6\" photo card size", "Adjustable spacing & margins", "Print at Walgreens, CVS, or home"],
-      color: "from-emerald-600 to-teal-500",
-      accent: "bg-emerald-50 text-emerald-700 border-emerald-200",
+        "Your photographs never leave your device. Computer vision and neural inference run client-side using WebGPU and WebAssembly.",
+      tags: ["Zero Cloud Uploads", "Zero Tracking", "100% Private"],
     },
     {
-      icon: FileDown,
-      title: "Dual Export: Web JPEG & Print PDF",
-      badge: "Versatile",
+      icon: Printer,
+      title: "Print-Ready Downloads",
       description:
-        "Download digital photos optimized under 240 KB for online passport submissions, plus vector-crisp PDF documents calibrated for exact millimeter printing.",
-      points: ["Portal-ready JPEG (<240 KB)", "Lossless PNG with transparency", "High-res PDF with exact mm scale"],
-      color: "from-amber-500 to-orange-500",
-      accent: "bg-amber-50 text-amber-700 border-amber-200",
+        "Download single 300 DPI high-density JPEGs or generate multi-photo 4×6 and A4 printable sheets complete with corner cutting guidelines.",
+      tags: ["300 DPI Export", "4×6 Print Sheets", "Printable PDF"],
     },
   ];
 
   return (
-    <section id="features" className="py-16 sm:py-24 bg-white">
+    <section id="features" className="py-20 sm:py-28 bg-[#0B0D12] border-t border-[#292F3A]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-            Professional AI Capabilities
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#8B7CFF] mb-2 block">
+            Capabilities & Standards
           </span>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Engineered for 100% Official Compliance
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#F5F7FA]">
+            Built for Official Biometric Compliance
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-slate-600">
-            Everything you need to create, verify, enhance, and print biometric identification photos.
+          <p className="mt-3 text-sm sm:text-base text-[#9CA3AF]">
+            Everything required to generate government-accepted passport and visa photographs without costly photography studios.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature) => {
-            const Icon = feature.icon;
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {benefits.map((item) => {
+            const Icon = item.icon;
             return (
               <div
-                key={feature.title}
-                className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-lg hover:border-blue-300 transition-all duration-200 flex flex-col justify-between group"
+                key={item.title}
+                className="rounded-2xl bg-[#11141B] border border-[#292F3A] p-6 hover:border-[#3B4352] transition-colors flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <div
-                      className={`w-12 h-12 rounded-xl bg-gradient-to-tr ${feature.color} flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform`}
-                    >
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <span
-                      className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${feature.accent}`}
-                    >
-                      {feature.badge}
-                    </span>
+                  <div className="w-10 h-10 rounded-xl bg-[#171B24] border border-[#292F3A] flex items-center justify-center text-[#8B7CFF] mb-5">
+                    <Icon className="w-5 h-5" />
                   </div>
-
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">
-                    {feature.title}
+                  <h3 className="text-base font-semibold text-[#F5F7FA] mb-2">
+                    {item.title}
                   </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed mb-5">
-                    {feature.description}
+                  <p className="text-xs sm:text-sm text-[#9CA3AF] leading-relaxed mb-6">
+                    {item.description}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100 space-y-2">
-                  {feature.points.map((point) => (
-                    <div key={point} className="flex items-center gap-2 text-xs font-medium text-slate-700">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                      <span>{point}</span>
-                    </div>
+                <div className="flex flex-wrap gap-1.5 pt-4 border-t border-[#292F3A]">
+                  {item.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2 py-0.5 rounded-md bg-[#171B24] text-[11px] font-medium text-[#9CA3AF] border border-[#292F3A]"
+                    >
+                      {tag}
+                    </span>
                   ))}
                 </div>
               </div>
@@ -135,4 +109,3 @@ export function FeaturesShowcase() {
     </section>
   );
 }
-

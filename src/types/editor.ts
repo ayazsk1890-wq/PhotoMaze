@@ -1,4 +1,5 @@
 import { PassportSpec } from "../lib/constants/countries";
+import type { FaceDetectionResult } from "../lib/ai/faceDetector";
 
 export interface ImageAdjustments {
   zoom: number; // 0.5 to 3.0 (default 1.0)
@@ -39,7 +40,7 @@ export interface BackgroundRemovalState {
 export interface FaceDetectionState {
   isDetecting: boolean;
   hasRun: boolean;
-  result: import("../lib/ai/faceDetector").FaceDetectionResult | null;
+  result: FaceDetectionResult | null;
   error: string | null;
 }
 

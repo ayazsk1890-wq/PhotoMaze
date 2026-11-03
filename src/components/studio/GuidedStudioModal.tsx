@@ -107,7 +107,7 @@ export function GuidedStudioModal({
 
   // Run computer vision eyewear detector whenever active photo changes
   React.useEffect(() => {
-    if (!activePhotoUrl) return;
+    if (!isOpen || !activePhotoUrl) return;
     let isMounted = true;
     setIsAnalyzingPhoto(true);
 
@@ -167,7 +167,7 @@ export function GuidedStudioModal({
     return () => {
       isMounted = false;
     };
-  }, [activePhotoUrl]);
+  }, [isOpen, activePhotoUrl]);
 
   if (!isOpen) return null;
 
@@ -314,29 +314,29 @@ export function GuidedStudioModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-3xl my-8 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0B0D12]/80 backdrop-blur-md overflow-y-auto">
+      <div className="relative w-full max-w-3xl my-8 bg-[#11141B] border border-[#292F3A] rounded-2xl shadow-2xl overflow-hidden flex flex-col text-[#F5F7FA]">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/90 sticky top-0 z-10">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#292F3A] bg-[#11141B]/95 sticky top-0 z-10">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/25">
+            <div className="w-10 h-10 rounded-xl bg-[#1C2230] border border-[#292F3A] flex items-center justify-center text-[#8B7CFF] shadow-lg shadow-[#8B7CFF]/15">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+              <h2 className="text-lg font-bold text-[#F5F7FA] flex items-center gap-2">
                 PhotoMaze AI Passport Studio
-                <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-[#8B7CFF]/15 text-[#8B7CFF] border border-[#8B7CFF]/30">
                   100% Free • On-Device
                 </span>
               </h2>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-[#9CA3AF]">
                 Facial identity preservation • ICAO Doc 9303 & Indian Passport standard
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition"
+            className="p-2 text-[#9CA3AF] hover:text-[#F5F7FA] rounded-lg hover:bg-[#1C2230] transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -344,10 +344,10 @@ export function GuidedStudioModal({
 
         {/* Progress Stepper Bar (Steps 1 to 6) */}
         {currentStep <= 6 && (
-          <div className="px-6 pt-4 pb-2 bg-slate-900/50 border-b border-slate-800/60">
-            <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
+          <div className="px-6 pt-4 pb-2 bg-[#171B24] border-b border-[#292F3A]">
+            <div className="flex items-center justify-between text-xs text-[#9CA3AF] mb-2">
               <span>Step {currentStep} of 6</span>
-              <span className="font-medium text-blue-400">
+              <span className="font-medium text-[#8B7CFF]">
                 {currentStep === 1 && "Select Processing Mode"}
                 {currentStep === 2 && "Person Category & Head Covering"}
                 {currentStep === 3 && "Spectacles & Eyewear"}
@@ -356,9 +356,9 @@ export function GuidedStudioModal({
                 {currentStep === 6 && "Review & Confirmation"}
               </span>
             </div>
-            <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-[#1C2230] rounded-full overflow-hidden border border-[#292F3A]/40">
               <div
-                className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-300"
+                className="h-full bg-[#8B7CFF] transition-all duration-300"
                 style={{ width: `${(currentStep / 6) * 100}%` }}
               />
             </div>
@@ -1222,7 +1222,7 @@ export function GuidedStudioModal({
         </div>
 
         {/* Footer Navigation Buttons */}
-        <div className="px-6 py-4 border-t border-slate-800 bg-slate-900 flex items-center justify-between">
+        <div className="px-6 py-4 border-t border-[#292F3A] bg-[#11141B] flex items-center justify-between">
           {currentStep <= 6 && (
             <>
               <button
@@ -1231,7 +1231,7 @@ export function GuidedStudioModal({
                   if (currentStep > 1) setCurrentStep((prev) => prev - 1);
                   else onClose();
                 }}
-                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-[#9CA3AF] hover:text-[#F5F7FA] hover:bg-[#1C2230] transition flex items-center gap-1.5 cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
                 {currentStep === 1 ? "Cancel" : "Back"}
@@ -1241,7 +1241,7 @@ export function GuidedStudioModal({
                 <button
                   type="button"
                   onClick={() => setCurrentStep((prev) => prev + 1)}
-                  className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 transition shadow-lg shadow-blue-500/25 flex items-center gap-1.5 cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-[#8B7CFF] hover:bg-[#7665F5] transition shadow-lg shadow-[#8B7CFF]/25 flex items-center gap-1.5 cursor-pointer"
                 >
                   Continue <ChevronRight className="w-4 h-4" />
                 </button>
@@ -1250,14 +1250,14 @@ export function GuidedStudioModal({
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-red-600 hover:bg-red-500 transition shadow-lg shadow-red-500/30 flex items-center gap-1.5 cursor-pointer"
+                    className="px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-[#F87171] hover:bg-[#F87171]/90 transition shadow-lg shadow-[#F87171]/30 flex items-center gap-1.5 cursor-pointer"
                   >
                     <UploadCloud className="w-4 h-4" /> Upload Photo Without Sunglasses
                   </button>
                   <button
                     type="button"
                     onClick={() => setMode("appearance")}
-                    className="px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 transition cursor-pointer"
+                    className="px-3.5 py-2.5 rounded-xl text-xs font-semibold text-[#9CA3AF] hover:text-[#F5F7FA] bg-[#1C2230] hover:bg-[#292F3A] transition cursor-pointer"
                   >
                     Switch to Studio Mode
                   </button>
@@ -1266,9 +1266,9 @@ export function GuidedStudioModal({
                 <button
                   type="button"
                   onClick={handleGenerate}
-                  className="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 transition shadow-lg shadow-blue-500/30 flex items-center gap-2 cursor-pointer"
+                  className="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-[#8B7CFF] hover:bg-[#7665F5] transition shadow-lg shadow-[#8B7CFF]/25 flex items-center gap-2 cursor-pointer"
                 >
-                  <Sparkles className="w-4 h-4" /> Generate My Passport Photo
+                  <Sparkles className="w-4 h-4 text-amber-300" /> Generate My Passport Photo
                 </button>
               )}
             </>
@@ -1280,14 +1280,14 @@ export function GuidedStudioModal({
                 <button
                   type="button"
                   onClick={handleStartOver}
-                  className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 cursor-pointer"
+                  className="px-3.5 py-2 rounded-xl text-xs font-semibold text-[#9CA3AF] hover:text-[#F5F7FA] hover:bg-[#1C2230] transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <RotateCcw className="w-3.5 h-3.5" /> Start Over
                 </button>
                 <button
                   type="button"
                   onClick={handleGenerate}
-                  className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 cursor-pointer"
+                  className="px-3.5 py-2 rounded-xl text-xs font-semibold text-[#9CA3AF] hover:text-[#F5F7FA] hover:bg-[#1C2230] transition flex items-center gap-1.5 cursor-pointer"
                 >
                   <RefreshCw className="w-3.5 h-3.5" /> Regenerate
                 </button>
@@ -1295,7 +1295,7 @@ export function GuidedStudioModal({
                   <button
                     type="button"
                     onClick={handleUndo}
-                    className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition cursor-pointer"
+                    className="px-3.5 py-2 rounded-xl text-xs font-semibold text-[#9CA3AF] hover:text-[#F5F7FA] hover:bg-[#1C2230] transition cursor-pointer"
                   >
                     Undo
                   </button>
@@ -1306,14 +1306,14 @@ export function GuidedStudioModal({
                 <button
                   type="button"
                   onClick={handleDownload}
-                  className="px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 transition shadow-lg shadow-blue-500/25 flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2.5 rounded-xl text-xs font-bold text-[#F5F7FA] bg-[#171B24] hover:bg-[#1C2230] border border-[#292F3A] transition shadow-md flex items-center gap-1.5 cursor-pointer"
                 >
-                  <Download className="w-4 h-4" /> Download High-Res (300 DPI)
+                  <Download className="w-4 h-4 text-[#8B7CFF]" /> Download High-Res (300 DPI)
                 </button>
                 <button
                   type="button"
                   onClick={handleAccept}
-                  className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 transition shadow-lg shadow-emerald-500/30 flex items-center gap-2 cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl text-xs font-bold text-black bg-[#34D399] hover:bg-[#34D399]/90 transition shadow-lg shadow-[#34D399]/25 flex items-center gap-2 cursor-pointer"
                 >
                   <Check className="w-4 h-4" /> Accept & Continue in Editor
                 </button>

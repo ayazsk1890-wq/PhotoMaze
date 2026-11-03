@@ -43,22 +43,22 @@ export function PortraitEnhancerPanel() {
   return (
     <div className="space-y-5">
       {/* ── Main Enhancement Master Header ─────────────────────────── */}
-      <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 rounded-2xl p-4 text-white shadow-md shadow-blue-500/20">
+      <div className="bg-[#171B24] border border-[#292F3A] rounded-2xl p-4 text-[#F5F7FA] shadow-md">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-white/20 text-white">
+            <div className="p-1.5 rounded-lg bg-[#1C2230] text-[#8B7CFF] border border-[#292F3A]">
               <Sparkles className="w-4 h-4 text-amber-300" />
             </div>
             <div>
-              <h4 className="text-sm font-bold flex items-center gap-1.5">
+              <h4 className="text-sm font-bold flex items-center gap-1.5 text-[#F5F7FA]">
                 <span>AI Portrait Enhancement</span>
                 {settings.enabled && (
-                  <span className="text-[10px] bg-emerald-400/90 text-emerald-950 font-black px-1.5 py-0.2 rounded-full">
+                  <span className="text-[10px] bg-[#34D399]/20 text-[#34D399] border border-[#34D399]/30 font-black px-1.5 py-0.2 rounded-full">
                     ACTIVE
                   </span>
                 )}
               </h4>
-              <span className="text-[10px] text-blue-100">Identity-Preserving Engine · Zero-Cost</span>
+              <span className="text-[10px] text-[#9CA3AF]">Identity-Preserving Engine · Zero-Cost</span>
             </div>
           </div>
 
@@ -66,8 +66,8 @@ export function PortraitEnhancerPanel() {
           <button
             type="button"
             onClick={() => toggleEnhancement()}
-            className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-              settings.enabled ? "bg-amber-400" : "bg-white/30"
+            className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border border-[#292F3A] transition-colors duration-200 ease-in-out focus:outline-none ${
+              settings.enabled ? "bg-[#8B7CFF]" : "bg-[#1C2230]"
             }`}
             title={settings.enabled ? "Turn Off Enhancement" : "Turn On Enhancement"}
           >
@@ -79,7 +79,7 @@ export function PortraitEnhancerPanel() {
           </button>
         </div>
 
-        <p className="text-xs text-blue-100 leading-relaxed mb-3">
+        <p className="text-xs text-[#9CA3AF] leading-relaxed mb-3">
           Enhance skin texture, balance portrait lighting, sharpen eyes, and reduce high-ISO noise
           while strictly retaining natural facial contours and ICAO biometric validity.
         </p>
@@ -92,8 +92,8 @@ export function PortraitEnhancerPanel() {
             disabled={!settings.enabled}
             className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed ${
               compareMode
-                ? "bg-amber-400 text-slate-950 shadow-sm"
-                : "bg-white/15 hover:bg-white/25 text-white"
+                ? "bg-amber-400 text-black shadow-sm"
+                : "bg-[#1C2230] hover:bg-[#292F3A] border border-[#292F3A] text-[#F5F7FA]"
             }`}
           >
             {compareMode ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
@@ -103,7 +103,7 @@ export function PortraitEnhancerPanel() {
           <button
             type="button"
             onClick={resetEnhancement}
-            className="py-1.5 px-2.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white transition-colors"
+            className="py-1.5 px-2.5 rounded-xl text-xs font-semibold bg-[#1C2230] hover:bg-[#292F3A] border border-[#292F3A] text-[#9CA3AF] hover:text-[#F5F7FA] transition-colors"
             title="Reset enhancement settings"
           >
             <RefreshCw className="w-3.5 h-3.5" />
@@ -113,7 +113,7 @@ export function PortraitEnhancerPanel() {
 
       {/* ── Processing Indicator ───────────────────────────────────── */}
       {isProcessing && (
-        <div className="flex items-center gap-2 px-3 py-2 bg-blue-50 border border-blue-200 rounded-xl text-xs text-blue-700 animate-pulse">
+        <div className="flex items-center gap-2 px-3 py-2 bg-[#171B24] border border-[#8B7CFF]/40 rounded-xl text-xs text-[#8B7CFF] animate-pulse">
           <Activity className="w-3.5 h-3.5 animate-spin" />
           <span>Refining portrait details in browser memory…</span>
         </div>
@@ -121,9 +121,9 @@ export function PortraitEnhancerPanel() {
 
       {/* ── Presets Grid ───────────────────────────────────────────── */}
       <div>
-        <label className="text-xs font-bold text-slate-700 block mb-2 flex items-center justify-between">
+        <label className="text-xs font-bold text-[#F5F7FA] block mb-2 flex items-center justify-between">
           <span>1-Click Enhancement Presets</span>
-          <span className="text-[10px] text-slate-400 font-normal">Click to apply profile</span>
+          <span className="text-[10px] text-[#697386] font-normal">Click to apply profile</span>
         </label>
         <div className="grid grid-cols-2 gap-2">
           {presets.map((p) => {
@@ -135,20 +135,20 @@ export function PortraitEnhancerPanel() {
                 onClick={() => applyEnhancementPreset(p.id)}
                 className={`p-2.5 rounded-xl border text-left transition-all relative ${
                   isSelected
-                    ? "border-blue-600 bg-blue-50/70 shadow-xs ring-1 ring-blue-500/30"
-                    : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
+                    ? "border-[#8B7CFF] bg-[#1C2230] shadow-xs ring-1 ring-[#8B7CFF]/30"
+                    : "border-[#292F3A] bg-[#171B24] hover:border-[#292F3A]/80 hover:bg-[#1C2230]"
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm">{p.icon}</span>
                   {isSelected && (
-                    <span className="w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center">
+                    <span className="w-4 h-4 rounded-full bg-[#8B7CFF] text-white flex items-center justify-center">
                       <Check className="w-2.5 h-2.5" />
                     </span>
                   )}
                 </div>
-                <p className="text-xs font-bold text-slate-800 leading-tight">{p.name}</p>
-                <p className="text-[10px] text-slate-500 leading-tight mt-0.5">{p.desc}</p>
+                <p className="text-xs font-bold text-[#F5F7FA] leading-tight">{p.name}</p>
+                <p className="text-[10px] text-[#9CA3AF] leading-tight mt-0.5">{p.desc}</p>
               </button>
             );
           })}
@@ -157,11 +157,11 @@ export function PortraitEnhancerPanel() {
 
       {/* ── Detailed Enhancement Sliders ───────────────────────────── */}
       <div className="space-y-4 pt-1">
-        <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-          <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+        <div className="flex items-center justify-between border-b border-[#292F3A] pb-2">
+          <span className="text-xs font-bold text-[#F5F7FA] uppercase tracking-wider">
             Fine-Tuning Controls
           </span>
-          <span className="text-[10px] text-slate-500">
+          <span className="text-[10px] text-[#697386]">
             {settings.enabled ? "Customized" : "Turn on above to activate"}
           </span>
         </div>
@@ -169,10 +169,10 @@ export function PortraitEnhancerPanel() {
         {/* 1. Skin Retouching */}
         <div className="space-y-1.5">
           <div className="flex justify-between text-xs">
-            <span className="text-slate-700 font-medium flex items-center gap-1.5">
+            <span className="text-[#9CA3AF] font-medium flex items-center gap-1.5">
               <span>Skin Retouching</span>
             </span>
-            <span className="font-mono font-bold text-blue-700">{settings.skinSmoothing}%</span>
+            <span className="font-mono font-bold text-[#8B7CFF]">{settings.skinSmoothing}%</span>
           </div>
           <input
             type="range"
@@ -181,16 +181,16 @@ export function PortraitEnhancerPanel() {
             value={settings.skinSmoothing}
             disabled={!settings.enabled}
             onChange={(e) => updateEnhancementSettings({ skinSmoothing: Number(e.target.value) })}
-            className="w-full accent-blue-600 cursor-pointer disabled:opacity-40"
+            className="w-full accent-[#8B7CFF] cursor-pointer disabled:opacity-40"
           />
-          <p className="text-[10px] text-slate-400">Softens uneven tones while keeping natural skin pores.</p>
+          <p className="text-[10px] text-[#697386]">Softens uneven tones while keeping natural skin pores.</p>
         </div>
 
         {/* 2. Blemish Reduction */}
         <div className="space-y-1.5">
           <div className="flex justify-between text-xs">
-            <span className="text-slate-700 font-medium">Blemish Reduction</span>
-            <span className="font-mono font-bold text-blue-700">{settings.blemishReduction}%</span>
+            <span className="text-[#9CA3AF] font-medium">Blemish Reduction</span>
+            <span className="font-mono font-bold text-[#8B7CFF]">{settings.blemishReduction}%</span>
           </div>
           <input
             type="range"
@@ -199,16 +199,16 @@ export function PortraitEnhancerPanel() {
             value={settings.blemishReduction}
             disabled={!settings.enabled}
             onChange={(e) => updateEnhancementSettings({ blemishReduction: Number(e.target.value) })}
-            className="w-full accent-blue-600 cursor-pointer disabled:opacity-40"
+            className="w-full accent-[#8B7CFF] cursor-pointer disabled:opacity-40"
           />
-          <p className="text-[10px] text-slate-400">Diminishes temporary spots & redness on facial areas.</p>
+          <p className="text-[10px] text-[#697386]">Diminishes temporary spots & redness on facial areas.</p>
         </div>
 
         {/* 3. Lighting Correction */}
         <div className="space-y-1.5">
           <div className="flex justify-between text-xs">
-            <span className="text-slate-700 font-medium">Lighting Correction (Shadows Lift)</span>
-            <span className="font-mono font-bold text-blue-700">{settings.lightingCorrection}%</span>
+            <span className="text-[#9CA3AF] font-medium">Lighting Correction (Shadows Lift)</span>
+            <span className="font-mono font-bold text-[#8B7CFF]">{settings.lightingCorrection}%</span>
           </div>
           <input
             type="range"
@@ -217,16 +217,16 @@ export function PortraitEnhancerPanel() {
             value={settings.lightingCorrection}
             disabled={!settings.enabled}
             onChange={(e) => updateEnhancementSettings({ lightingCorrection: Number(e.target.value) })}
-            className="w-full accent-blue-600 cursor-pointer disabled:opacity-40"
+            className="w-full accent-[#8B7CFF] cursor-pointer disabled:opacity-40"
           />
-          <p className="text-[10px] text-slate-400">Balances uneven shadows under chin and eye sockets.</p>
+          <p className="text-[10px] text-[#697386]">Balances uneven shadows under chin and eye sockets.</p>
         </div>
 
         {/* 4. Sharpness */}
         <div className="space-y-1.5">
           <div className="flex justify-between text-xs">
-            <span className="text-slate-700 font-medium">Eye & Hair Sharpness</span>
-            <span className="font-mono font-bold text-blue-700">{settings.sharpness}%</span>
+            <span className="text-[#9CA3AF] font-medium">Eye & Hair Sharpness</span>
+            <span className="font-mono font-bold text-[#8B7CFF]">{settings.sharpness}%</span>
           </div>
           <input
             type="range"
@@ -235,16 +235,16 @@ export function PortraitEnhancerPanel() {
             value={settings.sharpness}
             disabled={!settings.enabled}
             onChange={(e) => updateEnhancementSettings({ sharpness: Number(e.target.value) })}
-            className="w-full accent-blue-600 cursor-pointer disabled:opacity-40"
+            className="w-full accent-[#8B7CFF] cursor-pointer disabled:opacity-40"
           />
-          <p className="text-[10px] text-slate-400">Unsharp mask sharpening for eyes, iris, and hair edges.</p>
+          <p className="text-[10px] text-[#697386]">Unsharp mask sharpening for eyes, iris, and hair edges.</p>
         </div>
 
         {/* 5. Noise Reduction */}
         <div className="space-y-1.5">
           <div className="flex justify-between text-xs">
-            <span className="text-slate-700 font-medium">Noise Reduction</span>
-            <span className="font-mono font-bold text-blue-700">{settings.noiseReduction}%</span>
+            <span className="text-[#9CA3AF] font-medium">Noise Reduction</span>
+            <span className="font-mono font-bold text-[#8B7CFF]">{settings.noiseReduction}%</span>
           </div>
           <input
             type="range"
@@ -253,16 +253,16 @@ export function PortraitEnhancerPanel() {
             value={settings.noiseReduction}
             disabled={!settings.enabled}
             onChange={(e) => updateEnhancementSettings({ noiseReduction: Number(e.target.value) })}
-            className="w-full accent-blue-600 cursor-pointer disabled:opacity-40"
+            className="w-full accent-[#8B7CFF] cursor-pointer disabled:opacity-40"
           />
-          <p className="text-[10px] text-slate-400">Cleans low-light sensor grain and JPEG compression artifacts.</p>
+          <p className="text-[10px] text-[#697386]">Cleans low-light sensor grain and JPEG compression artifacts.</p>
         </div>
 
         {/* 6. Colour Correction (Temperature) */}
         <div className="space-y-1.5">
           <div className="flex justify-between text-xs">
-            <span className="text-slate-700 font-medium">Colour Temperature</span>
-            <span className="font-mono font-bold text-blue-700">
+            <span className="text-[#9CA3AF] font-medium">Colour Temperature</span>
+            <span className="font-mono font-bold text-[#8B7CFF]">
               {settings.colorCorrection > 0 ? `+${settings.colorCorrection} Warm` : settings.colorCorrection < 0 ? `${settings.colorCorrection} Cool` : "Neutral"}
             </span>
           </div>
@@ -273,9 +273,9 @@ export function PortraitEnhancerPanel() {
             value={settings.colorCorrection}
             disabled={!settings.enabled}
             onChange={(e) => updateEnhancementSettings({ colorCorrection: Number(e.target.value) })}
-            className="w-full accent-blue-600 cursor-pointer disabled:opacity-40"
+            className="w-full accent-[#8B7CFF] cursor-pointer disabled:opacity-40"
           />
-          <div className="flex justify-between text-[10px] text-slate-400">
+          <div className="flex justify-between text-[10px] text-[#697386]">
             <span>Cool (Fluorescent fix)</span>
             <span>Warm (Natural sun)</span>
           </div>
@@ -285,11 +285,11 @@ export function PortraitEnhancerPanel() {
         <div className="grid grid-cols-2 gap-3 pt-1">
           <div>
             <div className="flex justify-between text-xs mb-1">
-              <span className="text-slate-600 flex items-center gap-1">
-                <Sun className="w-3 h-3 text-amber-500" />
+              <span className="text-[#9CA3AF] flex items-center gap-1">
+                <Sun className="w-3 h-3 text-amber-400" />
                 <span>Brightness</span>
               </span>
-              <span className="font-mono font-bold text-slate-800">
+              <span className="font-mono font-bold text-[#F5F7FA]">
                 {settings.brightness > 0 ? `+${settings.brightness}` : settings.brightness}
               </span>
             </div>
@@ -300,17 +300,17 @@ export function PortraitEnhancerPanel() {
               value={settings.brightness}
               disabled={!settings.enabled}
               onChange={(e) => updateEnhancementSettings({ brightness: Number(e.target.value) })}
-              className="w-full accent-blue-600 cursor-pointer disabled:opacity-40"
+              className="w-full accent-[#8B7CFF] cursor-pointer disabled:opacity-40"
             />
           </div>
 
           <div>
             <div className="flex justify-between text-xs mb-1">
-              <span className="text-slate-600 flex items-center gap-1">
-                <Contrast className="w-3 h-3 text-indigo-500" />
+              <span className="text-[#9CA3AF] flex items-center gap-1">
+                <Contrast className="w-3 h-3 text-[#8B7CFF]" />
                 <span>Contrast</span>
               </span>
-              <span className="font-mono font-bold text-slate-800">
+              <span className="font-mono font-bold text-[#F5F7FA]">
                 {settings.contrast > 0 ? `+${settings.contrast}` : settings.contrast}
               </span>
             </div>
@@ -321,18 +321,18 @@ export function PortraitEnhancerPanel() {
               value={settings.contrast}
               disabled={!settings.enabled}
               onChange={(e) => updateEnhancementSettings({ contrast: Number(e.target.value) })}
-              className="w-full accent-blue-600 cursor-pointer disabled:opacity-40"
+              className="w-full accent-[#8B7CFF] cursor-pointer disabled:opacity-40"
             />
           </div>
         </div>
 
-        {/* 8. 300 DPI Resolution Enhancement Switch */}
-        <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+        {/* 8. 300 DPI Detail Reconstruction Switch */}
+        <div className="p-3 bg-[#171B24] border border-[#292F3A] rounded-xl flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-amber-500" />
+            <Zap className="w-4 h-4 text-amber-400" />
             <div>
-              <p className="text-xs font-bold text-slate-800">300 DPI Detail Reconstruction</p>
-              <p className="text-[10px] text-slate-500">Sub-pixel Lanczos3 supersampling on export</p>
+              <p className="text-xs font-bold text-[#F5F7FA]">300 DPI Detail Reconstruction</p>
+              <p className="text-[10px] text-[#697386]">Sub-pixel Lanczos3 supersampling on export</p>
             </div>
           </div>
           <button
@@ -340,8 +340,8 @@ export function PortraitEnhancerPanel() {
             onClick={() =>
               updateEnhancementSettings({ superResolution: !settings.superResolution })
             }
-            className={`w-9 h-5 rounded-full transition-colors relative ${
-              settings.superResolution ? "bg-blue-600" : "bg-slate-300"
+            className={`w-9 h-5 rounded-full transition-colors relative border border-[#292F3A] ${
+              settings.superResolution ? "bg-[#8B7CFF]" : "bg-[#1C2230]"
             }`}
           >
             <span
@@ -353,8 +353,8 @@ export function PortraitEnhancerPanel() {
         </div>
 
         {/* Compliance Guarantee Notice */}
-        <div className="flex items-start gap-2 p-2.5 bg-emerald-50/70 border border-emerald-200/80 rounded-xl text-emerald-800 text-[11px] leading-relaxed">
-          <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+        <div className="flex items-start gap-2 p-2.5 bg-[#34D399]/15 border border-[#34D399]/30 rounded-xl text-[#34D399] text-[11px] leading-relaxed">
+          <ShieldCheck className="w-4 h-4 text-[#34D399] shrink-0 mt-0.5" />
           <span>
             <strong>ICAO Doc 9303 Compliant:</strong> Our edge-preserving engine retains your true facial
             features, birthmarks, and eye color intact so your passport photo will not be rejected.

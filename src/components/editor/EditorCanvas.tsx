@@ -179,14 +179,14 @@ export function EditorCanvas() {
       onDragOver={handleDropzoneDragOver}
       onDragLeave={handleDropzoneDragLeave}
       onDrop={handleDropzoneDrop}
-      className="relative w-full h-full min-h-[500px] flex items-center justify-center bg-slate-950 select-none overflow-hidden"
+      className="relative w-full h-full min-h-[500px] flex items-center justify-center bg-[#0B0D12] select-none overflow-hidden"
     >
       {/* Background checkered pattern */}
       <div
-        className="absolute inset-0 opacity-15 pointer-events-none"
+        className="absolute inset-0 opacity-10 pointer-events-none"
         style={{
           backgroundImage:
-            "radial-gradient(#94a3b8 1px, transparent 1px), radial-gradient(#94a3b8 1px, #020617 1px)",
+            "radial-gradient(#697386 1px, transparent 1px), radial-gradient(#697386 1px, #0B0D12 1px)",
           backgroundSize: "24px 24px",
           backgroundPosition: "0 0, 12px 12px",
         }}
@@ -200,7 +200,7 @@ export function EditorCanvas() {
             height: `${cropBoxHeight}px`,
             ...canvasBgStyle,
           }}
-          className="relative rounded-2xl shadow-2xl overflow-hidden border-2 border-slate-700/80 ring-1 ring-white/10 transition-shadow duration-300"
+          className="relative rounded-2xl shadow-2xl overflow-hidden border-2 border-[#292F3A] ring-1 ring-white/5 transition-shadow duration-300"
         >
           {/* Before-and-After Split Slider Mode */}
           {showBeforeAfter && originalImageSrc && transparentCutoutUrl ? (
@@ -371,18 +371,18 @@ export function EditorCanvas() {
           onClick={replaceImage}
           className={`max-w-md w-full mx-4 rounded-3xl border-2 border-dashed p-8 sm:p-12 text-center cursor-pointer transition-all duration-200 ${
             isDropzoneDragging
-              ? "border-blue-500 bg-blue-950/40 scale-102"
-              : "border-slate-700 bg-slate-900/60 hover:border-slate-500 hover:bg-slate-900"
+              ? "border-[#8B7CFF] bg-[#8B7CFF]/10 scale-102"
+              : "border-[#292F3A] bg-[#11141B] hover:border-[#8B7CFF]/50 hover:bg-[#171B24]"
           }`}
         >
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white mx-auto mb-4 shadow-lg shadow-blue-600/30">
-            <UploadCloud className="w-8 h-8 animate-bounce" />
+          <div className="w-16 h-16 rounded-2xl bg-[#1C2230] border border-[#292F3A] flex items-center justify-center text-[#8B7CFF] mx-auto mb-4 shadow-lg shadow-[#8B7CFF]/10">
+            <UploadCloud className="w-8 h-8" />
           </div>
-          <h3 className="text-white text-lg font-bold mb-1">Upload Photo to Begin</h3>
-          <p className="text-slate-400 text-xs sm:text-sm max-w-xs mx-auto mb-5">
+          <h3 className="text-[#F5F7FA] text-lg font-bold mb-1">Upload Photo to Begin</h3>
+          <p className="text-[#9CA3AF] text-xs sm:text-sm max-w-xs mx-auto mb-5">
             Drag & drop your portrait here, or click to browse.
           </p>
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-colors shadow-md">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#8B7CFF] hover:bg-[#7665F5] text-white font-semibold text-xs transition-colors shadow-md shadow-[#8B7CFF]/20">
             <FileImage className="w-4 h-4" />
             <span>Select Image File</span>
           </div>
@@ -393,8 +393,8 @@ export function EditorCanvas() {
       {displayImageSrc && (
         <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none z-20">
           <div className="pointer-events-auto flex items-center gap-2">
-            <div className="bg-slate-800/90 backdrop-blur-md text-white border border-slate-700 px-3 py-1.5 rounded-xl shadow-lg text-xs font-semibold flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="bg-[#171B24]/90 backdrop-blur-md text-[#F5F7FA] border border-[#292F3A] px-3 py-1.5 rounded-xl shadow-lg text-xs font-semibold flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#34D399] animate-pulse" />
               <span>
                 {selectedSpec.country} {selectedSpec.documentType} ({selectedSpec.widthMm}×{selectedSpec.heightMm} mm)
               </span>
@@ -407,13 +407,13 @@ export function EditorCanvas() {
                 onClick={() => setActiveSidebarTab("compliance")}
                 className={`px-2.5 py-1.5 rounded-xl text-xs font-bold backdrop-blur-md shadow-md border flex items-center gap-1.5 transition-all ${
                   biometricEvaluation.isFullyCompliant
-                    ? "bg-emerald-950/80 border-emerald-700/80 text-emerald-200 hover:bg-emerald-900"
-                    : "bg-amber-950/80 border-amber-700/80 text-amber-200 hover:bg-amber-900"
+                    ? "bg-[#34D399]/15 border-[#34D399]/40 text-[#34D399] hover:bg-[#34D399]/25"
+                    : "bg-amber-500/15 border-amber-500/40 text-amber-300 hover:bg-amber-500/25"
                 }`}
                 title="View Biometric Compliance Report"
               >
                 {biometricEvaluation.isFullyCompliant ? (
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#34D399]" />
                 ) : (
                   <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
                 )}
@@ -427,7 +427,7 @@ export function EditorCanvas() {
             <button
               type="button"
               onClick={triggerBiometricAutoCrop}
-              className="px-3 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-lg border border-blue-400/40 flex items-center gap-1.5 transition-all active:scale-95"
+              className="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#8B7CFF] hover:bg-[#7665F5] text-white shadow-lg border border-[#8B7CFF]/40 flex items-center gap-1.5 transition-all active:scale-95"
               title="Automatically center face and crop to official country specifications"
             >
               <Wand2 className="w-3.5 h-3.5 text-amber-300" />
@@ -441,8 +441,8 @@ export function EditorCanvas() {
                 onClick={() => setShowBeforeAfter(!showBeforeAfter)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-semibold backdrop-blur-md shadow-lg border transition-all flex items-center gap-1.5 ${
                   showBeforeAfter
-                    ? "bg-violet-600 text-white border-violet-500"
-                    : "bg-slate-800/90 hover:bg-slate-800 text-slate-300 border-slate-700"
+                    ? "bg-[#8B7CFF] text-white border-[#8B7CFF]"
+                    : "bg-[#171B24]/90 hover:bg-[#1C2230] text-[#9CA3AF] hover:text-[#F5F7FA] border border-[#292F3A]"
                 }`}
                 title="Toggle Before/After Comparison Slider"
               >
@@ -458,8 +458,8 @@ export function EditorCanvas() {
                 onClick={() => setActiveSidebarTab("outfit")}
                 className={`px-3 py-1.5 rounded-xl text-xs font-semibold backdrop-blur-md shadow-lg border transition-all flex items-center gap-1.5 ${
                   outfitState.previewMode
-                    ? "bg-violet-600 text-white border-violet-500"
-                    : "bg-slate-800/90 hover:bg-slate-800 text-slate-300 border-slate-700"
+                    ? "bg-[#8B7CFF] text-white border-[#8B7CFF]"
+                    : "bg-[#171B24]/90 hover:bg-[#1C2230] text-[#9CA3AF] hover:text-[#F5F7FA] border border-[#292F3A]"
                 }`}
                 title="AI Outfit is applied — click to manage"
               >
@@ -475,8 +475,8 @@ export function EditorCanvas() {
                 onClick={() => toggleEnhancementCompare()}
                 className={`px-3 py-1.5 rounded-xl text-xs font-semibold backdrop-blur-md shadow-lg border transition-all flex items-center gap-1.5 ${
                   enhancementState.compareMode
-                    ? "bg-amber-400 text-slate-950 border-amber-300 font-bold"
-                    : "bg-blue-600 text-white border-blue-500"
+                    ? "bg-amber-400 text-black border-amber-300 font-bold"
+                    : "bg-[#8B7CFF] text-white border-[#8B7CFF]"
                 }`}
                 title={
                   enhancementState.compareMode
@@ -495,23 +495,12 @@ export function EditorCanvas() {
               onClick={() => setShowGuidelines(!showGuidelines)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold backdrop-blur-md shadow-lg border transition-all flex items-center gap-1.5 ${
                 showGuidelines
-                  ? "bg-emerald-600/90 hover:bg-emerald-600 text-white border-emerald-500"
-                  : "bg-slate-800/90 hover:bg-slate-800 text-slate-300 border-slate-700"
+                  ? "bg-[#34D399]/20 text-[#34D399] border-[#34D399]/40"
+                  : "bg-[#171B24]/90 hover:bg-[#1C2230] text-[#9CA3AF] hover:text-[#F5F7FA] border border-[#292F3A]"
               }`}
             >
               {showGuidelines ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
               <span>ICAO Guides</span>
-            </button>
-
-            {/* Print Sheet Generator Button */}
-            <button
-              type="button"
-              onClick={() => setIsPrintModalOpen(true)}
-              className="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800/90 hover:bg-slate-800 text-blue-400 hover:text-blue-300 border border-slate-700 backdrop-blur-md shadow-lg transition-all flex items-center gap-1.5"
-              title="Open Bulk Print Sheet Generator"
-            >
-              <Printer className="w-3.5 h-3.5 text-blue-400" />
-              <span>Print Sheet</span>
             </button>
           </div>
         </div>
@@ -519,35 +508,35 @@ export function EditorCanvas() {
 
       {/* Floating Canvas Bottom Overlay: Zoom & Reset */}
       {displayImageSrc && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-slate-800/95 backdrop-blur-md text-white border border-slate-700 px-3 py-2 rounded-2xl shadow-xl z-20">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-[#171B24]/95 backdrop-blur-md text-[#F5F7FA] border border-[#292F3A] px-3 py-2 rounded-2xl shadow-xl z-20">
           <button
             type="button"
             onClick={() => updateAdjustments({ zoom: Math.max(0.5, Number((adjustments.zoom - 0.1).toFixed(1))) })}
-            className="p-1.5 rounded-lg hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
+            className="p-1.5 rounded-lg hover:bg-[#1C2230] text-[#9CA3AF] hover:text-[#F5F7FA] transition-colors"
             title="Zoom Out"
           >
             <ZoomOut className="w-4 h-4" />
           </button>
 
-          <span className="text-xs font-bold text-slate-200 min-w-[45px] text-center">
+          <span className="text-xs font-bold text-[#F5F7FA] min-w-[45px] text-center font-mono">
             {Math.round(adjustments.zoom * 100)}%
           </span>
 
           <button
             type="button"
             onClick={() => updateAdjustments({ zoom: Math.min(3.0, Number((adjustments.zoom + 0.1).toFixed(1))) })}
-            className="p-1.5 rounded-lg hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
+            className="p-1.5 rounded-lg hover:bg-[#1C2230] text-[#9CA3AF] hover:text-[#F5F7FA] transition-colors"
             title="Zoom In"
           >
             <ZoomIn className="w-4 h-4" />
           </button>
 
-          <div className="w-px h-4 bg-slate-700 mx-1" />
+          <div className="w-px h-4 bg-[#292F3A] mx-1" />
 
           <button
             type="button"
             onClick={resetAdjustments}
-            className="px-2.5 py-1 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-700 flex items-center gap-1 transition-colors"
+            className="px-2.5 py-1 rounded-lg text-xs font-medium text-[#9CA3AF] hover:text-[#F5F7FA] hover:bg-[#1C2230] flex items-center gap-1 transition-colors"
             title="Reset Adjustments"
           >
             <RotateCcw className="w-3 h-3" />

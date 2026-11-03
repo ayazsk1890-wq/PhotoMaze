@@ -140,22 +140,22 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
   const isHighResJpeg = format === "jpeg-highres";
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-fade-in overflow-y-auto">
-      <div className="relative w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#0B0D12]/80 backdrop-blur-md animate-fade-in overflow-y-auto">
+      <div className="relative w-full max-w-4xl bg-[#11141B] border border-[#292F3A] rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] text-[#F5F7FA]">
         {/* Modal Header */}
-        <div className="px-5 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/90 sticky top-0 z-10">
+        <div className="px-5 py-4 border-b border-[#292F3A] flex items-center justify-between bg-[#11141B]/95 sticky top-0 z-10">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+            <div className="w-10 h-10 rounded-xl bg-[#1C2230] border border-[#292F3A] flex items-center justify-center text-[#8B7CFF] shadow-lg shadow-[#8B7CFF]/15">
               <Download className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <h2 className="text-base sm:text-lg font-bold text-[#F5F7FA] flex items-center gap-2">
                 Export Passport Photograph
-                <span className="text-xs px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-mono">
-                  Phase 9
+                <span className="text-xs px-2 py-0.5 rounded-full bg-[#8B7CFF]/15 text-[#8B7CFF] border border-[#8B7CFF]/30 font-mono">
+                  300 DPI
                 </span>
               </h2>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-[#9CA3AF]">
                 {selectedSpec.country} {selectedSpec.documentType} • {selectedSpec.widthMm} ×{" "}
                 {selectedSpec.heightMm} mm ({(selectedSpec.widthMm / 25.4).toFixed(2)} ×{" "}
                 {(selectedSpec.heightMm / 25.4).toFixed(2)} in)
@@ -165,7 +165,7 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-2 rounded-xl text-[#9CA3AF] hover:text-[#F5F7FA] hover:bg-[#1C2230] transition-colors"
             aria-label="Close export modal"
           >
             <X className="w-5 h-5" />
@@ -178,7 +178,7 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
           <div className="lg:col-span-7 space-y-5">
             {/* 1. Format Presets */}
             <div>
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5 block">
+              <label className="text-xs font-semibold uppercase tracking-wider text-[#9CA3AF] mb-2.5 block">
                 Select Output Format & Use-Case
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -188,18 +188,18 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
                   onClick={() => setFormat("jpeg-portal")}
                   className={`p-3.5 rounded-xl border text-left transition-all ${
                     isPortalMode
-                      ? "bg-blue-600/15 border-blue-500 text-white shadow-md shadow-blue-500/10"
-                      : "bg-slate-800/40 border-slate-700/60 text-slate-300 hover:bg-slate-800 hover:border-slate-600"
+                      ? "bg-[#1C2230] border-[#8B7CFF] text-[#F5F7FA] shadow-md shadow-[#8B7CFF]/10 ring-1 ring-[#8B7CFF]/40"
+                      : "bg-[#171B24] border-[#292F3A] text-[#9CA3AF] hover:bg-[#1C2230] hover:text-[#F5F7FA]"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="font-bold text-sm flex items-center gap-1.5">
-                      <FileCheck2 className="w-4 h-4 text-emerald-400" />
+                    <span className="font-bold text-sm flex items-center gap-1.5 text-[#F5F7FA]">
+                      <FileCheck2 className="w-4 h-4 text-[#34D399]" />
                       Portal-Ready JPEG
                     </span>
-                    {isPortalMode && <Check className="w-4 h-4 text-blue-400" />}
+                    {isPortalMode && <Check className="w-4 h-4 text-[#8B7CFF]" />}
                   </div>
-                  <p className="text-[11px] text-slate-400 leading-snug">
+                  <p className="text-[11px] text-[#9CA3AF] leading-snug">
                     US DS-160, Indian OCI & visa portals. Strict ≤ 240 KB target with 300 DPI metadata.
                   </p>
                 </button>
@@ -210,18 +210,18 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
                   onClick={() => setFormat("jpeg-highres")}
                   className={`p-3.5 rounded-xl border text-left transition-all ${
                     isHighResJpeg
-                      ? "bg-blue-600/15 border-blue-500 text-white shadow-md shadow-blue-500/10"
-                      : "bg-slate-800/40 border-slate-700/60 text-slate-300 hover:bg-slate-800 hover:border-slate-600"
+                      ? "bg-[#1C2230] border-[#8B7CFF] text-[#F5F7FA] shadow-md shadow-[#8B7CFF]/10 ring-1 ring-[#8B7CFF]/40"
+                      : "bg-[#171B24] border-[#292F3A] text-[#9CA3AF] hover:bg-[#1C2230] hover:text-[#F5F7FA]"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="font-bold text-sm flex items-center gap-1.5">
-                      <ImageIcon className="w-4 h-4 text-blue-400" />
+                    <span className="font-bold text-sm flex items-center gap-1.5 text-[#F5F7FA]">
+                      <ImageIcon className="w-4 h-4 text-[#8B7CFF]" />
                       High-Res Print JPEG
                     </span>
-                    {isHighResJpeg && <Check className="w-4 h-4 text-blue-400" />}
+                    {isHighResJpeg && <Check className="w-4 h-4 text-[#8B7CFF]" />}
                   </div>
-                  <p className="text-[11px] text-slate-400 leading-snug">
+                  <p className="text-[11px] text-[#9CA3AF] leading-snug">
                     Maximum photographic fidelity (96% quality). Ideal for kiosks, labs and home prints.
                   </p>
                 </button>
@@ -232,18 +232,18 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
                   onClick={() => setFormat("png-lossless")}
                   className={`p-3.5 rounded-xl border text-left transition-all ${
                     isPngMode
-                      ? "bg-blue-600/15 border-blue-500 text-white shadow-md shadow-blue-500/10"
-                      : "bg-slate-800/40 border-slate-700/60 text-slate-300 hover:bg-slate-800 hover:border-slate-600"
+                      ? "bg-[#1C2230] border-[#8B7CFF] text-[#F5F7FA] shadow-md shadow-[#8B7CFF]/10 ring-1 ring-[#8B7CFF]/40"
+                      : "bg-[#171B24] border-[#292F3A] text-[#9CA3AF] hover:bg-[#1C2230] hover:text-[#F5F7FA]"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="font-bold text-sm flex items-center gap-1.5">
-                      <Layers className="w-4 h-4 text-violet-400" />
+                    <span className="font-bold text-sm flex items-center gap-1.5 text-[#F5F7FA]">
+                      <Layers className="w-4 h-4 text-[#8B7CFF]" />
                       Lossless Cutout PNG
                     </span>
-                    {isPngMode && <Check className="w-4 h-4 text-blue-400" />}
+                    {isPngMode && <Check className="w-4 h-4 text-[#8B7CFF]" />}
                   </div>
-                  <p className="text-[11px] text-slate-400 leading-snug">
+                  <p className="text-[11px] text-[#9CA3AF] leading-snug">
                     Lossless compression with transparency support and embedded pHYs resolution tag.
                   </p>
                 </button>
@@ -254,18 +254,18 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
                   onClick={() => setFormat("pdf-single")}
                   className={`p-3.5 rounded-xl border text-left transition-all ${
                     isPdfMode
-                      ? "bg-blue-600/15 border-blue-500 text-white shadow-md shadow-blue-500/10"
-                      : "bg-slate-800/40 border-slate-700/60 text-slate-300 hover:bg-slate-800 hover:border-slate-600"
+                      ? "bg-[#1C2230] border-[#8B7CFF] text-[#F5F7FA] shadow-md shadow-[#8B7CFF]/10 ring-1 ring-[#8B7CFF]/40"
+                      : "bg-[#171B24] border-[#292F3A] text-[#9CA3AF] hover:bg-[#1C2230] hover:text-[#F5F7FA]"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="font-bold text-sm flex items-center gap-1.5">
+                    <span className="font-bold text-sm flex items-center gap-1.5 text-[#F5F7FA]">
                       <FileText className="w-4 h-4 text-amber-400" />
                       Single-Photo PDF
                     </span>
-                    {isPdfMode && <Check className="w-4 h-4 text-blue-400" />}
+                    {isPdfMode && <Check className="w-4 h-4 text-[#8B7CFF]" />}
                   </div>
-                  <p className="text-[11px] text-slate-400 leading-snug">
+                  <p className="text-[11px] text-[#9CA3AF] leading-snug">
                     Exact physical millimeter page dimensions (72 pt/in). Zero printer scaling distortion.
                   </p>
                 </button>
@@ -274,13 +274,13 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
 
             {/* 2. Target File Size Limit (Only in Portal JPEG Mode) */}
             {isPortalMode && (
-              <div className="bg-slate-800/50 border border-slate-700/60 rounded-xl p-3.5 space-y-2.5">
+              <div className="bg-[#171B24] border border-[#292F3A] rounded-xl p-3.5 space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                  <label className="text-xs font-semibold text-[#F5F7FA] flex items-center gap-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#34D399]" />
                     Government Portal File Size Ceiling:
                   </label>
-                  <span className="text-xs font-mono font-bold text-emerald-400">
+                  <span className="text-xs font-mono font-bold text-[#34D399]">
                     ≤ {targetMaxKb} KB
                   </span>
                 </div>
@@ -297,12 +297,12 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
                       onClick={() => setTargetMaxKb(preset.value)}
                       className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold border text-center transition-all ${
                         targetMaxKb === preset.value
-                          ? "bg-emerald-600/20 border-emerald-500 text-emerald-300"
-                          : "bg-slate-800 border-slate-700 text-slate-400 hover:text-white hover:bg-slate-700"
+                          ? "bg-[#34D399]/20 border-[#34D399] text-[#34D399]"
+                          : "bg-[#1C2230] border-[#292F3A] text-[#9CA3AF] hover:text-[#F5F7FA] hover:bg-[#292F3A]"
                       }`}
                     >
                       <div>{preset.label}</div>
-                      <div className="text-[9px] text-slate-400 font-normal">{preset.desc}</div>
+                      <div className="text-[9px] text-[#697386] font-normal">{preset.desc}</div>
                     </button>
                   ))}
                 </div>
@@ -311,7 +311,7 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
 
             {/* 3. DPI Resolution Selector */}
             <div>
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2 block">
+              <label className="text-xs font-semibold uppercase tracking-wider text-[#9CA3AF] mb-2 block">
                 Output Print Resolution (DPI Density)
               </label>
               <div className="grid grid-cols-2 gap-3">
@@ -320,16 +320,16 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
                   onClick={() => setDpi(300)}
                   className={`p-3 rounded-xl border text-left transition-all ${
                     dpi === 300
-                      ? "bg-blue-600/15 border-blue-500 text-white"
-                      : "bg-slate-800/40 border-slate-700/60 text-slate-400 hover:bg-slate-800"
+                      ? "bg-[#1C2230] border-[#8B7CFF] text-[#F5F7FA] ring-1 ring-[#8B7CFF]/40"
+                      : "bg-[#171B24] border-[#292F3A] text-[#9CA3AF] hover:bg-[#1C2230]"
                   }`}
                 >
-                  <div className="font-bold text-sm text-white">300 DPI (Standard)</div>
-                  <div className="text-xs text-slate-400 mt-0.5">
+                  <div className="font-bold text-sm text-[#F5F7FA]">300 DPI (Standard)</div>
+                  <div className="text-xs text-[#9CA3AF] mt-0.5">
                     {Math.round((selectedSpec.widthMm / 25.4) * 300)} ×{" "}
                     {Math.round((selectedSpec.heightMm / 25.4) * 300)} px
                   </div>
-                  <div className="text-[10px] text-blue-400 mt-1">Official passport studio standard</div>
+                  <div className="text-[10px] text-[#8B7CFF] mt-1">Official passport studio standard</div>
                 </button>
 
                 <button
@@ -337,42 +337,42 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
                   onClick={() => setDpi(600)}
                   className={`p-3 rounded-xl border text-left transition-all ${
                     dpi === 600
-                      ? "bg-blue-600/15 border-blue-500 text-white"
-                      : "bg-slate-800/40 border-slate-700/60 text-slate-400 hover:bg-slate-800"
+                      ? "bg-[#1C2230] border-[#8B7CFF] text-[#F5F7FA] ring-1 ring-[#8B7CFF]/40"
+                      : "bg-[#171B24] border-[#292F3A] text-[#9CA3AF] hover:bg-[#1C2230]"
                   }`}
                 >
-                  <div className="font-bold text-sm text-white">600 DPI (Ultra-Sharp)</div>
-                  <div className="text-xs text-slate-400 mt-0.5">
+                  <div className="font-bold text-sm text-[#F5F7FA]">600 DPI (Ultra-Sharp)</div>
+                  <div className="text-xs text-[#9CA3AF] mt-0.5">
                     {Math.round((selectedSpec.widthMm / 25.4) * 600)} ×{" "}
                     {Math.round((selectedSpec.heightMm / 25.4) * 600)} px
                   </div>
-                  <div className="text-[10px] text-violet-400 mt-1">Maximum fine-art print density</div>
+                  <div className="text-[10px] text-[#8B7CFF] mt-1">Maximum fine-art print density</div>
                 </button>
               </div>
             </div>
 
             {/* 4. Technical Compliance Audit Info */}
-            <div className="bg-slate-800/30 border border-slate-800 rounded-xl p-3.5 space-y-2 text-xs">
-              <div className="font-semibold text-slate-300 flex items-center gap-1.5 mb-1">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+            <div className="bg-[#171B24] border border-[#292F3A] rounded-xl p-3.5 space-y-2 text-xs">
+              <div className="font-semibold text-[#F5F7FA] flex items-center gap-1.5 mb-1">
+                <ShieldCheck className="w-4 h-4 text-[#34D399]" />
                 ICAO Doc 9303 & ISO/IEC 19794-5 Compliance Checklist:
               </div>
-              <ul className="space-y-1.5 text-slate-400">
+              <ul className="space-y-1.5 text-[#9CA3AF]">
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" />
                   <span>
                     Exact Aspect Ratio: <strong>{(selectedSpec.widthMm / selectedSpec.heightMm).toFixed(3)}</strong>{" "}
                     ({selectedSpec.widthMm} × {selectedSpec.heightMm} mm)
                   </span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" />
                   <span>
                     Embedded Metadata: <strong>{dpi} DPI JFIF/pHYs density tags</strong> injected
                   </span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" />
                   <span>
                     Background:{" "}
                     <strong>
@@ -387,14 +387,14 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
           </div>
 
           {/* Right Column: Live Output Preview & File Inspection */}
-          <div className="lg:col-span-5 flex flex-col justify-between space-y-4 bg-slate-950/60 p-4 sm:p-5 rounded-2xl border border-slate-800/80">
+          <div className="lg:col-span-5 flex flex-col justify-between space-y-4 bg-[#0B0D12] p-4 sm:p-5 rounded-2xl border border-[#292F3A]">
             {/* Live Crop Preview Box */}
             <div className="flex flex-col items-center justify-center">
-              <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">
+              <span className="text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider mb-2">
                 Output Preview
               </span>
               <div
-                className="relative rounded-lg shadow-xl overflow-hidden border-2 border-slate-700/80 max-h-[260px] flex items-center justify-center bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:12px_12px]"
+                className="relative rounded-lg shadow-xl overflow-hidden border-2 border-[#292F3A] max-h-[260px] flex items-center justify-center bg-[radial-gradient(#292F3A_1px,transparent_1px)] [background-size:12px_12px]"
                 style={{
                   aspectRatio: `${selectedSpec.widthMm} / ${selectedSpec.heightMm}`,
                   width: selectedSpec.widthMm > selectedSpec.heightMm ? "220px" : "auto",
@@ -409,39 +409,39 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
                     className="w-full h-full object-contain"
                   />
                 ) : (
-                  <div className="p-4 text-center text-xs text-slate-500">Generating preview…</div>
+                  <div className="p-4 text-center text-xs text-[#697386]">Generating preview…</div>
                 )}
               </div>
             </div>
 
             {/* File Inspection Details */}
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 space-y-2 text-xs">
-              <div className="flex justify-between items-center text-slate-400">
+            <div className="bg-[#171B24] border border-[#292F3A] rounded-xl p-3.5 space-y-2 text-xs">
+              <div className="flex justify-between items-center text-[#9CA3AF]">
                 <span>Pixel Dimensions:</span>
-                <span className="font-mono font-bold text-white">
+                <span className="font-mono font-bold text-[#F5F7FA]">
                   {widthPx} × {heightPx} px
                 </span>
               </div>
-              <div className="flex justify-between items-center text-slate-400">
+              <div className="flex justify-between items-center text-[#9CA3AF]">
                 <span>Physical Size:</span>
-                <span className="font-mono text-white">
+                <span className="font-mono text-[#F5F7FA]">
                   {selectedSpec.widthMm} × {selectedSpec.heightMm} mm ({(selectedSpec.widthMm / 25.4).toFixed(2)} ×{" "}
                   {(selectedSpec.heightMm / 25.4).toFixed(2)} in)
                 </span>
               </div>
-              <div className="flex justify-between items-center text-slate-400">
+              <div className="flex justify-between items-center text-[#9CA3AF]">
                 <span>Resolution / Density:</span>
-                <span className="font-mono text-emerald-400 font-semibold">{dpi} DPI</span>
+                <span className="font-mono text-[#34D399] font-semibold">{dpi} DPI</span>
               </div>
-              <div className="flex justify-between items-center text-slate-400">
+              <div className="flex justify-between items-center text-[#9CA3AF]">
                 <span>Output File Size:</span>
-                <span className="font-mono font-bold text-blue-400">
+                <span className="font-mono font-bold text-[#8B7CFF]">
                   {exportResult ? exportResult.sizeKbFormatted : "Calculating…"}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-slate-400">
+              <div className="flex justify-between items-center text-[#9CA3AF]">
                 <span>Filename:</span>
-                <span className="font-mono text-[10px] text-slate-300 truncate max-w-[160px]" title={exportResult?.filename}>
+                <span className="font-mono text-[10px] text-[#9CA3AF] truncate max-w-[160px]" title={exportResult?.filename}>
                   {exportResult?.filename || "photo.jpg"}
                 </span>
               </div>
@@ -453,7 +453,7 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
                 type="button"
                 onClick={handleDownload}
                 disabled={isExporting || !exportResult}
-                className="w-full py-3.5 px-4 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 shadow-lg shadow-blue-500/25 active:scale-98 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-3.5 px-4 rounded-xl font-bold text-sm text-white bg-[#8B7CFF] hover:bg-[#7665F5] shadow-lg shadow-[#8B7CFF]/20 active:scale-98 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {isExporting ? (
                   <>
@@ -462,7 +462,7 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
                   </>
                 ) : exportSuccess ? (
                   <>
-                    <Check className="w-4 h-4 text-emerald-300" />
+                    <Check className="w-4 h-4 text-[#34D399]" />
                     <span>Downloaded Successfully!</span>
                   </>
                 ) : (
@@ -476,7 +476,7 @@ export function SinglePhotoExportModal({ isOpen, onClose }: SinglePhotoExportMod
                 )}
               </button>
 
-              <p className="text-[11px] text-center text-slate-500">
+              <p className="text-[11px] text-center text-[#697386]">
                 Supports desktop downloads and iOS/Android native mobile saving.
               </p>
             </div>

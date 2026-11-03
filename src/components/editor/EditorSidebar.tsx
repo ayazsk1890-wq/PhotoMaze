@@ -141,15 +141,15 @@ export function EditorSidebar() {
   };
 
   return (
-    <aside className="w-full lg:w-96 bg-white border-l border-slate-200 flex flex-col h-full shadow-lg z-20">
+    <aside className="w-full bg-[#11141B] flex flex-col h-full z-20 text-[#F5F7FA]">
       {/* 1-Click AI Auto-Pilot Toolbar */}
-      <div className="p-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100">
+      <div className="p-3 bg-[#171B24] border-b border-[#292F3A]">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-[11px] font-extrabold uppercase tracking-wider text-blue-900 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-blue-600 animate-pulse" />
+          <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#F5F7FA] flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-[#8B7CFF] animate-pulse" />
             <span>AI Auto-Pilot Profile:</span>
           </span>
-          <span className="text-[10px] bg-blue-100 text-blue-700 font-bold px-2 py-0.5 rounded-full">
+          <span className="text-[10px] bg-[#1C2230] text-[#8B7CFF] font-bold px-2 py-0.5 rounded-full border border-[#292F3A]">
             1-Click Magic
           </span>
         </div>
@@ -165,8 +165,8 @@ export function EditorSidebar() {
                 onClick={() => setActivePersona(p.id)}
                 className={`py-1 px-1 rounded-xl text-center border transition-all text-xs cursor-pointer ${
                   isSelected
-                    ? "border-blue-600 bg-white text-blue-700 font-bold shadow-xs ring-1 ring-blue-500/20"
-                    : "border-slate-200 bg-white/70 text-slate-600 hover:bg-white"
+                    ? "border-[#8B7CFF] bg-[#1C2230] text-[#8B7CFF] font-bold shadow-xs ring-1 ring-[#8B7CFF]/30"
+                    : "border-[#292F3A] bg-[#11141B] text-[#9CA3AF] hover:text-[#F5F7FA] hover:bg-[#1C2230]"
                 }`}
                 title={p.label}
               >
@@ -181,7 +181,7 @@ export function EditorSidebar() {
           <button
             type="button"
             onClick={() => setIsStudioModalOpen(true)}
-            className="w-full py-2 px-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white font-bold text-xs shadow-md shadow-blue-500/20 flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+            className="w-full py-2 px-2 rounded-xl bg-[#8B7CFF] hover:bg-[#7665F5] text-white font-bold text-xs shadow-md shadow-[#8B7CFF]/20 flex items-center justify-center gap-1.5 transition-all cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-300" />
             <span>AI Studio Wizard</span>
@@ -191,7 +191,7 @@ export function EditorSidebar() {
             type="button"
             onClick={() => runAiAutoPilot(activePersona)}
             disabled={autoPilotState.isRunning}
-            className="w-full py-2 px-2 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer disabled:opacity-60"
+            className="w-full py-2 px-2 rounded-xl border border-[#292F3A] bg-[#1C2230] hover:bg-[#292F3A] text-[#F5F7FA] font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer disabled:opacity-60"
           >
             {autoPilotState.isRunning ? (
               <>
@@ -200,7 +200,7 @@ export function EditorSidebar() {
               </>
             ) : (
               <>
-                <Wand2 className="w-3.5 h-3.5 text-blue-600" />
+                <Wand2 className="w-3.5 h-3.5 text-[#8B7CFF]" />
                 <span>Run 1-Click AI Auto-Pilot</span>
               </>
             )}
@@ -209,18 +209,18 @@ export function EditorSidebar() {
       </div>
 
       {/* Sidebar Navigation Tabs */}
-      <div className="flex border-b border-slate-200 bg-slate-50/80 p-1">
+      <div className="flex border-b border-[#292F3A] bg-[#171B24] p-1">
         <button
           type="button"
           onClick={() => setActiveSidebarTab("crop")}
           className={`flex-1 py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1 transition-all ${
             activeSidebarTab === "crop"
-              ? "bg-white text-blue-700 shadow-xs border border-slate-200"
-              : "text-slate-600 hover:text-slate-900"
+              ? "bg-[#1C2230] text-[#8B7CFF] shadow-xs border border-[#292F3A]"
+              : "text-[#9CA3AF] hover:text-[#F5F7FA]"
           }`}
         >
           <Globe2 className="w-3.5 h-3.5" />
-          <span>Crop & Specs</span>
+          <span>Crop</span>
         </button>
 
         <button
@@ -228,8 +228,8 @@ export function EditorSidebar() {
           onClick={() => setActiveSidebarTab("compliance")}
           className={`flex-1 py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1 transition-all relative ${
             activeSidebarTab === "compliance"
-              ? "bg-white text-blue-700 shadow-xs border border-slate-200"
-              : "text-slate-600 hover:text-slate-900"
+              ? "bg-[#1C2230] text-[#8B7CFF] shadow-xs border border-[#292F3A]"
+              : "text-[#9CA3AF] hover:text-[#F5F7FA]"
           }`}
         >
           <ShieldCheck className="w-3.5 h-3.5" />
@@ -237,7 +237,7 @@ export function EditorSidebar() {
           {biometricEvaluation && (
             <span
               className={`w-2 h-2 rounded-full absolute top-1.5 right-1.5 ${
-                biometricEvaluation.isFullyCompliant ? "bg-emerald-500" : "bg-amber-500 animate-pulse"
+                biometricEvaluation.isFullyCompliant ? "bg-[#34D399]" : "bg-amber-500 animate-pulse"
               }`}
             />
           )}
@@ -248,14 +248,14 @@ export function EditorSidebar() {
           onClick={() => setActiveSidebarTab("background")}
           className={`flex-1 py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1 transition-all relative ${
             activeSidebarTab === "background"
-              ? "bg-white text-blue-700 shadow-xs border border-slate-200"
-              : "text-slate-600 hover:text-slate-900"
+              ? "bg-[#1C2230] text-[#8B7CFF] shadow-xs border border-[#292F3A]"
+              : "text-[#9CA3AF] hover:text-[#F5F7FA]"
           }`}
         >
           <Scissors className="w-3.5 h-3.5" />
           <span>Background</span>
           {transparentCutoutUrl && (
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 absolute top-1.5 right-1.5" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#34D399] absolute top-1.5 right-1.5" />
           )}
         </button>
 
@@ -264,14 +264,14 @@ export function EditorSidebar() {
           onClick={() => setActiveSidebarTab("adjust")}
           className={`flex-1 py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1 transition-all relative ${
             activeSidebarTab === "adjust"
-              ? "bg-white text-blue-700 shadow-xs border border-slate-200"
-              : "text-slate-600 hover:text-slate-900"
+              ? "bg-[#1C2230] text-[#8B7CFF] shadow-xs border border-[#292F3A]"
+              : "text-[#9CA3AF] hover:text-[#F5F7FA]"
           }`}
         >
-          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
           <span>Enhance</span>
           {enhancementState.settings.enabled && (
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 absolute top-1.5 right-1.5" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#8B7CFF] absolute top-1.5 right-1.5" />
           )}
         </button>
 
@@ -280,14 +280,14 @@ export function EditorSidebar() {
           onClick={() => setActiveSidebarTab("outfit")}
           className={`flex-1 py-2 px-1 rounded-lg text-xs font-bold flex items-center justify-center gap-1 transition-all relative ${
             activeSidebarTab === "outfit"
-              ? "bg-white text-violet-700 shadow-xs border border-slate-200"
-              : "text-slate-600 hover:text-slate-900"
+              ? "bg-[#1C2230] text-[#8B7CFF] shadow-xs border border-[#292F3A]"
+              : "text-[#9CA3AF] hover:text-[#F5F7FA]"
           }`}
         >
           <Shirt className="w-3.5 h-3.5" />
           <span>Outfit</span>
           {outfitState.outputImageUrl && (
-            <span className="w-1.5 h-1.5 rounded-full bg-violet-500 absolute top-1.5 right-1.5" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#8B7CFF] absolute top-1.5 right-1.5" />
           )}
         </button>
       </div>
@@ -298,25 +298,25 @@ export function EditorSidebar() {
         {activeSidebarTab === "crop" && (
           <div className="space-y-5">
             {/* 1-Click Biometric Auto-Crop Card */}
-            <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 rounded-2xl p-4 text-white shadow-md shadow-blue-500/20">
+            <div className="bg-[#171B24] rounded-2xl p-4 text-[#F5F7FA] border border-[#292F3A] shadow-md">
               <div className="flex items-center gap-2 mb-2">
-                <div className="p-1.5 rounded-lg bg-white/20 text-white">
+                <div className="p-1.5 rounded-lg bg-[#1C2230] text-[#8B7CFF] border border-[#292F3A]">
                   <Wand2 className="w-4 h-4 text-amber-300" />
                 </div>
                 <div>
                   <h4 className="text-sm font-bold">Biometric Auto-Crop</h4>
-                  <span className="text-[10px] text-blue-100">ICAO Doc 9303 & ISO/IEC 19794-5</span>
+                  <span className="text-[10px] text-[#9CA3AF]">ICAO Doc 9303 & ISO/IEC 19794-5</span>
                 </div>
               </div>
-              <p className="text-xs text-blue-100 mb-3 leading-relaxed">
+              <p className="text-xs text-[#9CA3AF] mb-3 leading-relaxed">
                 Automatically detects face landmarks, centers eyes on the biometric eye plane, scales head height to the legal {Math.round(selectedSpec.headMinPercentage * 100)}–{Math.round(selectedSpec.headMaxPercentage * 100)}% bracket, and levels tilt.
               </p>
               <button
                 type="button"
                 onClick={triggerBiometricAutoCrop}
-                className="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-blue-50 text-blue-700 font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-2 active:scale-98"
+                className="w-full py-2.5 px-4 rounded-xl bg-[#8B7CFF] hover:bg-[#7665F5] text-white font-bold text-xs shadow-md shadow-[#8B7CFF]/20 transition-all flex items-center justify-center gap-2 active:scale-98"
               >
-                <Sparkles className="w-4 h-4 text-amber-500" />
+                <Sparkles className="w-4 h-4 text-amber-300" />
                 <span>Auto-Crop to {selectedSpec.country} Spec</span>
               </button>
             </div>
@@ -324,23 +324,23 @@ export function EditorSidebar() {
             {/* Country Document Selector */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#9CA3AF]">
                   Select Country & Document
                 </label>
-                <span className="text-[11px] font-mono text-slate-400">
-                  {OFFICIAL_COUNTRY_SPECS.length} Official Presets
+                <span className="text-[11px] font-mono text-[#697386]">
+                  {OFFICIAL_COUNTRY_SPECS.length} Presets
                 </span>
               </div>
 
               {/* Search input */}
               <div className="relative mb-2">
-                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#697386]" />
                 <input
                   type="text"
                   value={countrySearch}
                   onChange={(e) => setCountrySearch(e.target.value)}
                   placeholder="Search countries (e.g. India, USA, UK, UAE...)"
-                  className="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-8 pr-3 py-2 bg-[#1C2230] border border-[#292F3A] rounded-xl text-xs text-[#F5F7FA] placeholder-[#697386] focus:outline-none focus:border-[#8B7CFF]"
                 />
               </div>
 
@@ -351,10 +351,10 @@ export function EditorSidebar() {
                   const found = OFFICIAL_COUNTRY_SPECS.find((s) => s.id === e.target.value);
                   if (found) setSelectedSpec(found);
                 }}
-                className="w-full p-2.5 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-2xs"
+                className="w-full p-2.5 bg-[#1C2230] border border-[#292F3A] rounded-xl text-xs font-bold text-[#F5F7FA] focus:outline-none focus:border-[#8B7CFF]"
               >
                 {filteredSpecs.map((spec) => (
-                  <option key={spec.id} value={spec.id}>
+                  <option key={spec.id} value={spec.id} className="bg-[#171B24] text-[#F5F7FA]">
                     {spec.country} — {spec.documentType} ({spec.widthMm} × {spec.heightMm} mm)
                   </option>
                 ))}
@@ -362,62 +362,62 @@ export function EditorSidebar() {
             </div>
 
             {/* Official Specification Metadata Card */}
-            <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200 text-xs space-y-2.5">
-              <div className="flex justify-between items-center pb-2 border-b border-slate-200">
+            <div className="bg-[#171B24] rounded-2xl p-4 border border-[#292F3A] text-xs space-y-2.5">
+              <div className="flex justify-between items-center pb-2 border-b border-[#292F3A]">
                 <div>
-                  <span className="font-bold text-slate-900 text-sm block">
+                  <span className="font-bold text-[#F5F7FA] text-sm block">
                     {selectedSpec.country}
                   </span>
-                  <span className="text-[10px] text-slate-500 font-medium">
+                  <span className="text-[10px] text-[#9CA3AF] font-medium">
                     {selectedSpec.documentType} Specification
                   </span>
                 </div>
-                <span className="font-mono font-bold bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-[11px]">
+                <span className="font-mono font-bold bg-[#1C2230] text-[#8B7CFF] border border-[#292F3A] px-2 py-0.5 rounded text-[11px]">
                   {selectedSpec.aspectRatio}
                 </span>
               </div>
 
               <div className="grid grid-cols-2 gap-2 pt-1 text-[11px]">
                 <div>
-                  <span className="text-slate-500 block">Physical Size</span>
-                  <span className="font-bold text-slate-800">
+                  <span className="text-[#697386] block">Physical Size</span>
+                  <span className="font-bold text-[#F5F7FA]">
                     {selectedSpec.widthMm} × {selectedSpec.heightMm} mm
                   </span>
                 </div>
                 <div>
-                  <span className="text-slate-500 block">Exact Pixels @ 300 DPI</span>
-                  <span className="font-mono font-bold text-slate-800">
+                  <span className="text-[#697386] block">Exact Pixels @ 300 DPI</span>
+                  <span className="font-mono font-bold text-[#F5F7FA]">
                     {selectedSpec.widthPx300Dpi} × {selectedSpec.heightPx300Dpi} px
                   </span>
                 </div>
                 <div>
-                  <span className="text-slate-500 block">Head Coverage</span>
-                  <span className="font-bold text-blue-700">
-                    {Math.round(selectedSpec.headMinPercentage * 100)}% – {Math.round(selectedSpec.headMaxPercentage * 100)}% of height
+                  <span className="text-[#697386] block">Head Coverage</span>
+                  <span className="font-bold text-[#8B7CFF]">
+                    {Math.round(selectedSpec.headMinPercentage * 100)}% – {Math.round(selectedSpec.headMaxPercentage * 100)}%
                   </span>
                 </div>
                 <div>
-                  <span className="text-slate-500 block">Required BG</span>
-                  <span className="font-bold text-slate-800 capitalize">
+                  <span className="text-[#697386] block">Required BG</span>
+                  <span className="font-bold text-[#F5F7FA] capitalize">
                     {selectedSpec.backgroundColor.replace("-", " ")}
                   </span>
                 </div>
               </div>
 
-              <p className="text-[11px] text-slate-600 bg-white p-2.5 rounded-xl border border-slate-200/80 leading-relaxed">
+              <p className="text-[11px] text-[#9CA3AF] bg-[#1C2230] p-2.5 rounded-xl border border-[#292F3A] leading-relaxed">
                 {selectedSpec.guidelineNotes}
               </p>
 
-              <div className="flex items-center justify-between pt-1 border-t border-slate-200 text-[10px] text-slate-400">
+              <div className="flex items-center justify-between pt-1 border-t border-[#292F3A] text-[10px] text-[#697386]">
                 <span>Verified: {selectedSpec.verifiedDate}</span>
                 {selectedSpec.officialSource.startsWith("http") && (
                   <a
                     href={selectedSpec.officialSource}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline flex items-center gap-1 font-semibold"
+                    className="text-[#8B7CFF] hover:underline flex items-center gap-1 font-semibold"
                   >
-                    <span>Official Agency Source</span>
+                    <span>Official Source</span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 )}
@@ -425,24 +425,24 @@ export function EditorSidebar() {
             </div>
 
             {/* Custom Dimensions Accordion */}
-            <div className="border border-slate-200 rounded-2xl overflow-hidden">
+            <div className="border border-[#292F3A] rounded-2xl overflow-hidden bg-[#171B24]">
               <button
                 type="button"
                 onClick={() => setShowCustomForm(!showCustomForm)}
-                className="w-full p-3 bg-slate-50 hover:bg-slate-100 flex items-center justify-between text-xs font-bold text-slate-700 transition-colors"
+                className="w-full p-3 bg-[#171B24] hover:bg-[#1C2230] flex items-center justify-between text-xs font-bold text-[#F5F7FA] transition-colors"
               >
                 <div className="flex items-center gap-2">
-                  <Settings2 className="w-4 h-4 text-blue-600" />
+                  <Settings2 className="w-4 h-4 text-[#8B7CFF]" />
                   <span>Custom Width, Height & DPI</span>
                 </div>
                 {showCustomForm ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </button>
 
               {showCustomForm && (
-                <form onSubmit={handleApplyCustom} className="p-4 space-y-3 bg-white text-xs">
+                <form onSubmit={handleApplyCustom} className="p-4 space-y-3 bg-[#171B24] border-t border-[#292F3A] text-xs">
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">
+                      <label className="text-[10px] font-bold text-[#9CA3AF] uppercase block mb-1">
                         Width
                       </label>
                       <input
@@ -453,12 +453,12 @@ export function EditorSidebar() {
                         onChange={(e) =>
                           setCustomFormState((prev) => ({ ...prev, width: Number(e.target.value) }))
                         }
-                        className="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-800"
+                        className="w-full p-2 bg-[#1C2230] border border-[#292F3A] rounded-lg text-xs font-bold text-[#F5F7FA]"
                         required
                       />
                     </div>
                     <div>
-                      <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">
+                      <label className="text-[10px] font-bold text-[#9CA3AF] uppercase block mb-1">
                         Height
                       </label>
                       <input
@@ -469,7 +469,7 @@ export function EditorSidebar() {
                         onChange={(e) =>
                           setCustomFormState((prev) => ({ ...prev, height: Number(e.target.value) }))
                         }
-                        className="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-800"
+                        className="w-full p-2 bg-[#1C2230] border border-[#292F3A] rounded-lg text-xs font-bold text-[#F5F7FA]"
                         required
                       />
                     </div>
@@ -477,7 +477,7 @@ export function EditorSidebar() {
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">
+                      <label className="text-[10px] font-bold text-[#9CA3AF] uppercase block mb-1">
                         Unit
                       </label>
                       <select
@@ -485,17 +485,17 @@ export function EditorSidebar() {
                         onChange={(e) =>
                           setCustomFormState((prev) => ({ ...prev, unit: e.target.value as any }))
                         }
-                        className="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-800"
+                        className="w-full p-2 bg-[#1C2230] border border-[#292F3A] rounded-lg text-xs font-bold text-[#F5F7FA]"
                       >
-                        <option value="mm">Millimeters (mm)</option>
-                        <option value="cm">Centimeters (cm)</option>
-                        <option value="inch">Inches (in)</option>
-                        <option value="pixel">Pixels (px)</option>
+                        <option value="mm" className="bg-[#171B24]">Millimeters (mm)</option>
+                        <option value="cm" className="bg-[#171B24]">Centimeters (cm)</option>
+                        <option value="inch" className="bg-[#171B24]">Inches (in)</option>
+                        <option value="pixel" className="bg-[#171B24]">Pixels (px)</option>
                       </select>
                     </div>
 
                     <div>
-                      <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">
+                      <label className="text-[10px] font-bold text-[#9CA3AF] uppercase block mb-1">
                         Print DPI
                       </label>
                       <select
@@ -503,18 +503,18 @@ export function EditorSidebar() {
                         onChange={(e) =>
                           setCustomFormState((prev) => ({ ...prev, dpi: Number(e.target.value) as any }))
                         }
-                        className="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold text-slate-800"
+                        className="w-full p-2 bg-[#1C2230] border border-[#292F3A] rounded-lg text-xs font-bold text-[#F5F7FA]"
                       >
-                        <option value={300}>300 DPI (Standard)</option>
-                        <option value={600}>600 DPI (Ultra HD)</option>
-                        <option value={150}>150 DPI (Web/Draft)</option>
+                        <option value={300} className="bg-[#171B24]">300 DPI (Standard)</option>
+                        <option value={600} className="bg-[#171B24]">600 DPI (Ultra HD)</option>
+                        <option value={150} className="bg-[#171B24]">150 DPI (Web/Draft)</option>
                       </select>
                     </div>
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs transition-colors"
+                    className="w-full py-2 bg-[#8B7CFF] hover:bg-[#7665F5] text-white font-bold rounded-xl text-xs transition-colors"
                   >
                     Apply Custom Specification
                   </button>
@@ -523,19 +523,19 @@ export function EditorSidebar() {
             </div>
 
             {/* Manual Positioning & Crop Sliders */}
-            <div className="space-y-4 pt-2 border-t border-slate-200">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">
+            <div className="space-y-4 pt-2 border-t border-[#292F3A]">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#9CA3AF] block">
                 Manual Positioning & Sizing
               </span>
 
               {/* Zoom Slider */}
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-slate-600 flex items-center gap-1">
-                    <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                  <span className="text-[#9CA3AF] flex items-center gap-1">
+                    <Sparkles className="w-3.5 h-3.5 text-[#8B7CFF]" />
                     <span>Zoom Scale</span>
                   </span>
-                  <span className="font-mono font-bold text-slate-900">
+                  <span className="font-mono font-bold text-[#F5F7FA]">
                     {Math.round(adjustments.zoom * 100)}%
                   </span>
                 </div>
@@ -546,18 +546,18 @@ export function EditorSidebar() {
                   step="0.05"
                   value={adjustments.zoom}
                   onChange={(e) => updateAdjustments({ zoom: Number(e.target.value) })}
-                  className="w-full accent-blue-600 cursor-pointer"
+                  className="w-full accent-[#8B7CFF] cursor-pointer"
                 />
               </div>
 
               {/* Horizontal Pan X */}
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-slate-600 flex items-center gap-1">
-                    <MoveHorizontal className="w-3.5 h-3.5 text-slate-500" />
+                  <span className="text-[#9CA3AF] flex items-center gap-1">
+                    <MoveHorizontal className="w-3.5 h-3.5 text-[#697386]" />
                     <span>Horizontal Center (Pan X)</span>
                   </span>
-                  <span className="font-mono font-bold text-slate-900">{adjustments.panX}px</span>
+                  <span className="font-mono font-bold text-[#F5F7FA]">{adjustments.panX}px</span>
                 </div>
                 <input
                   type="range"
@@ -565,18 +565,18 @@ export function EditorSidebar() {
                   max="200"
                   value={adjustments.panX}
                   onChange={(e) => updateAdjustments({ panX: Number(e.target.value) })}
-                  className="w-full accent-blue-600 cursor-pointer"
+                  className="w-full accent-[#8B7CFF] cursor-pointer"
                 />
               </div>
 
               {/* Vertical Pan Y */}
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-slate-600 flex items-center gap-1">
-                    <MoveVertical className="w-3.5 h-3.5 text-slate-500" />
+                  <span className="text-[#9CA3AF] flex items-center gap-1">
+                    <MoveVertical className="w-3.5 h-3.5 text-[#697386]" />
                     <span>Vertical Position (Pan Y)</span>
                   </span>
-                  <span className="font-mono font-bold text-slate-900">{adjustments.panY}px</span>
+                  <span className="font-mono font-bold text-[#F5F7FA]">{adjustments.panY}px</span>
                 </div>
                 <input
                   type="range"
@@ -584,18 +584,18 @@ export function EditorSidebar() {
                   max="200"
                   value={adjustments.panY}
                   onChange={(e) => updateAdjustments({ panY: Number(e.target.value) })}
-                  className="w-full accent-blue-600 cursor-pointer"
+                  className="w-full accent-[#8B7CFF] cursor-pointer"
                 />
               </div>
 
               {/* Fine Rotation */}
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-slate-600 flex items-center gap-1">
-                    <RotateCw className="w-3.5 h-3.5 text-slate-500" />
+                  <span className="text-[#9CA3AF] flex items-center gap-1">
+                    <RotateCw className="w-3.5 h-3.5 text-[#697386]" />
                     <span>Deskew Tilt Rotation</span>
                   </span>
-                  <span className="font-mono font-bold text-slate-900">{adjustments.rotation}°</span>
+                  <span className="font-mono font-bold text-[#F5F7FA]">{adjustments.rotation}°</span>
                 </div>
                 <input
                   type="range"
@@ -604,7 +604,7 @@ export function EditorSidebar() {
                   step="0.5"
                   value={adjustments.rotation}
                   onChange={(e) => updateAdjustments({ rotation: Number(e.target.value) })}
-                  className="w-full accent-blue-600 cursor-pointer"
+                  className="w-full accent-[#8B7CFF] cursor-pointer"
                 />
               </div>
 
@@ -613,7 +613,7 @@ export function EditorSidebar() {
                 <button
                   type="button"
                   onClick={() => updateAdjustments({ rotation: (adjustments.rotation - 90) % 360 })}
-                  className="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center justify-center gap-1"
+                  className="p-2 rounded-xl border border-[#292F3A] bg-[#1C2230] hover:bg-[#292F3A] text-[#F5F7FA] text-xs font-semibold flex items-center justify-center gap-1"
                   title="Rotate 90° Left"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
@@ -622,7 +622,7 @@ export function EditorSidebar() {
                 <button
                   type="button"
                   onClick={() => updateAdjustments({ rotation: (adjustments.rotation + 90) % 360 })}
-                  className="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center justify-center gap-1"
+                  className="p-2 rounded-xl border border-[#292F3A] bg-[#1C2230] hover:bg-[#292F3A] text-[#F5F7FA] text-xs font-semibold flex items-center justify-center gap-1"
                   title="Rotate 90° Right"
                 >
                   <RotateCw className="w-3.5 h-3.5" />
@@ -632,7 +632,7 @@ export function EditorSidebar() {
                   type="button"
                   onClick={() => updateAdjustments({ flipHorizontal: !adjustments.flipHorizontal })}
                   className={`p-2 rounded-xl border text-xs font-semibold flex items-center justify-center gap-1 ${
-                    adjustments.flipHorizontal ? "bg-blue-50 border-blue-400 text-blue-700" : "border-slate-200 text-slate-700"
+                    adjustments.flipHorizontal ? "bg-[#8B7CFF]/20 border-[#8B7CFF] text-[#8B7CFF]" : "border-[#292F3A] bg-[#1C2230] text-[#F5F7FA]"
                   }`}
                   title="Flip Horizontal"
                 >
@@ -643,7 +643,7 @@ export function EditorSidebar() {
                   type="button"
                   onClick={() => updateAdjustments({ flipVertical: !adjustments.flipVertical })}
                   className={`p-2 rounded-xl border text-xs font-semibold flex items-center justify-center gap-1 ${
-                    adjustments.flipVertical ? "bg-blue-50 border-blue-400 text-blue-700" : "border-slate-200 text-slate-700"
+                    adjustments.flipVertical ? "bg-[#8B7CFF]/20 border-[#8B7CFF] text-[#8B7CFF]" : "border-[#292F3A] bg-[#1C2230] text-[#F5F7FA]"
                   }`}
                   title="Flip Vertical"
                 >
@@ -663,18 +663,18 @@ export function EditorSidebar() {
               <div
                 className={`rounded-2xl p-4 border text-xs shadow-xs ${
                   biometricEvaluation.isFullyCompliant
-                    ? "bg-emerald-50/80 border-emerald-300 text-emerald-950"
-                    : "bg-amber-50/80 border-amber-300 text-amber-950"
+                    ? "bg-[#34D399]/15 border-[#34D399]/40 text-[#F5F7FA]"
+                    : "bg-amber-500/15 border-amber-500/40 text-[#F5F7FA]"
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     {biometricEvaluation.isFullyCompliant ? (
-                      <div className="p-1.5 rounded-lg bg-emerald-600 text-white">
+                      <div className="p-1.5 rounded-lg bg-[#34D399] text-black">
                         <CheckCircle2 className="w-5 h-5" />
                       </div>
                     ) : (
-                      <div className="p-1.5 rounded-lg bg-amber-600 text-white">
+                      <div className="p-1.5 rounded-lg bg-amber-500 text-black">
                         <AlertTriangle className="w-5 h-5" />
                       </div>
                     )}
@@ -684,27 +684,27 @@ export function EditorSidebar() {
                           ? "100% Biometric Compliant"
                           : "Compliance Attention Needed"}
                       </h4>
-                      <span className="text-[10px] opacity-80">
+                      <span className="text-[10px] text-[#9CA3AF]">
                         {selectedSpec.country} {selectedSpec.documentType} Standards
                       </span>
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="text-xl font-black font-mono">
+                    <span className="text-xl font-black font-mono text-[#F5F7FA]">
                       {biometricEvaluation.score}
                     </span>
-                    <span className="text-[10px] block opacity-75">/ 100 PTS</span>
+                    <span className="text-[10px] block text-[#9CA3AF]">/ 100 PTS</span>
                   </div>
                 </div>
 
-                <p className="text-[11px] leading-relaxed opacity-90">
+                <p className="text-[11px] leading-relaxed text-[#9CA3AF]">
                   {biometricEvaluation.isFullyCompliant
                     ? "Your photo meets all ICAO Doc 9303 and national agency requirements for head height, eye level alignment, and resolution."
                     : "Review the items flagged below. Click 'Auto-Crop to Spec' to automatically align facial coordinates."}
                 </p>
               </div>
             ) : (
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500 text-center">
+              <div className="p-4 rounded-xl bg-[#171B24] border border-[#292F3A] text-xs text-[#697386] text-center">
                 Upload a portrait to run biometric compliance checks.
               </div>
             )}
@@ -712,44 +712,44 @@ export function EditorSidebar() {
             {/* Itemized Checks */}
             {biometricEvaluation && (
               <div className="space-y-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#9CA3AF] block">
                   Detailed Biometric Audit Checks
                 </span>
 
                 {biometricEvaluation.checks.map((check) => (
                   <div
                     key={check.id}
-                    className="p-3 rounded-xl border bg-white shadow-2xs space-y-1"
+                    className="p-3 rounded-xl border border-[#292F3A] bg-[#171B24] space-y-1"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         {check.status === "pass" && (
-                          <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                          <CheckCircle2 className="w-4 h-4 text-[#34D399] flex-shrink-0" />
                         )}
                         {check.status === "warning" && (
-                          <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                          <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0" />
                         )}
                         {check.status === "fail" && (
-                          <XCircle className="w-4 h-4 text-rose-600 flex-shrink-0" />
+                          <XCircle className="w-4 h-4 text-[#F87171] flex-shrink-0" />
                         )}
-                        <span className="font-bold text-slate-800 text-xs">{check.title}</span>
+                        <span className="font-bold text-[#F5F7FA] text-xs">{check.title}</span>
                       </div>
                       <span
                         className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${
                           check.status === "pass"
-                            ? "bg-emerald-100 text-emerald-800"
+                            ? "bg-[#34D399]/20 text-[#34D399]"
                             : check.status === "warning"
-                            ? "bg-amber-100 text-amber-800"
-                            : "bg-rose-100 text-rose-800"
+                            ? "bg-amber-400/20 text-amber-300"
+                            : "bg-[#F87171]/20 text-[#F87171]"
                         }`}
                       >
                         {check.status}
                       </span>
                     </div>
 
-                    <p className="text-[11px] text-slate-700 pl-6">{check.message}</p>
+                    <p className="text-[11px] text-[#9CA3AF] pl-6">{check.message}</p>
                     {check.details && (
-                      <p className="text-[10px] text-slate-400 pl-6">{check.details}</p>
+                      <p className="text-[10px] text-[#697386] pl-6">{check.details}</p>
                     )}
                   </div>
                 ))}
@@ -757,11 +757,11 @@ export function EditorSidebar() {
             )}
 
             {/* Quick Auto-Fix Action */}
-            <div className="pt-2 border-t border-slate-100">
+            <div className="pt-2 border-t border-[#292F3A]">
               <button
                 type="button"
                 onClick={triggerBiometricAutoCrop}
-                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition-colors flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 rounded-xl bg-[#8B7CFF] hover:bg-[#7665F5] text-white font-bold text-xs shadow-md shadow-[#8B7CFF]/20 transition-colors flex items-center justify-center gap-2"
               >
                 <Wand2 className="w-4 h-4" />
                 <span>Auto-Align All Facial Parameters</span>
@@ -773,26 +773,26 @@ export function EditorSidebar() {
         {/* 3. BACKGROUND TAB (PHASE 4) */}
         {activeSidebarTab === "background" && (
           <div className="space-y-6">
-            <div className="bg-gradient-to-b from-blue-50/70 to-indigo-50/40 rounded-2xl p-4 border border-blue-200 shadow-xs">
+            <div className="bg-[#171B24] rounded-2xl p-4 border border-[#292F3A] shadow-xs">
               <div className="flex items-center gap-2 mb-2">
-                <div className="p-1.5 rounded-lg bg-blue-600 text-white shadow-xs">
+                <div className="p-1.5 rounded-lg bg-[#1C2230] text-[#8B7CFF] border border-[#292F3A]">
                   <Sparkles className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-slate-900">AI Background Removal</h4>
-                  <span className="text-[10px] text-slate-500">RMBG-1.4 Sub-Pixel Hair Matting</span>
+                  <h4 className="text-sm font-bold text-[#F5F7FA]">AI Background Removal</h4>
+                  <span className="text-[10px] text-[#697386]">RMBG-1.4 Sub-Pixel Hair Matting</span>
                 </div>
               </div>
 
-              <p className="text-xs text-slate-600 mb-4 leading-relaxed">
+              <p className="text-xs text-[#9CA3AF] mb-4 leading-relaxed">
                 Automatically isolates your portrait from background clutter, room shadows, and patterns with sub-pixel edge fidelity.
               </p>
 
               {transparentCutoutUrl ? (
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between bg-emerald-100/80 text-emerald-800 px-3 py-1.5 rounded-xl text-xs font-semibold">
+                  <div className="flex items-center justify-between bg-[#34D399]/15 border border-[#34D399]/30 text-[#34D399] px-3 py-1.5 rounded-xl text-xs font-semibold">
                     <span className="flex items-center gap-1.5">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <CheckCircle2 className="w-4 h-4 text-[#34D399]" />
                       Cutout Active (Hair Preserved)
                     </span>
                     <span className="text-[10px] font-mono opacity-80">Local AI</span>
@@ -804,8 +804,8 @@ export function EditorSidebar() {
                       onClick={() => setShowBeforeAfter(!showBeforeAfter)}
                       className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-colors ${
                         showBeforeAfter
-                          ? "bg-violet-600 text-white border-violet-600"
-                          : "bg-white border-slate-300 text-slate-700 hover:bg-slate-50"
+                          ? "bg-[#8B7CFF] text-white border-[#8B7CFF]"
+                          : "bg-[#1C2230] border-[#292F3A] text-[#F5F7FA] hover:bg-[#292F3A]"
                       }`}
                     >
                       <Columns className="w-3.5 h-3.5" />
@@ -815,7 +815,7 @@ export function EditorSidebar() {
                     <button
                       type="button"
                       onClick={restoreOriginalBackground}
-                      className="py-2 px-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                      className="py-2 px-3 rounded-xl border border-[#292F3A] bg-[#1C2230] hover:bg-[#292F3A] text-[#F5F7FA] text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                       title="Restore original selfie background"
                     >
                       <RotateCcw className="w-3.5 h-3.5" />
@@ -828,7 +828,7 @@ export function EditorSidebar() {
                   type="button"
                   onClick={triggerBackgroundRemoval}
                   disabled={bgRemovalState.isProcessing}
-                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white font-bold text-xs shadow-md shadow-blue-500/25 active:scale-98 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full py-3 px-4 rounded-xl bg-[#8B7CFF] hover:bg-[#7665F5] text-white font-bold text-xs shadow-md shadow-[#8B7CFF]/20 active:scale-98 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
                   <span>
@@ -841,10 +841,10 @@ export function EditorSidebar() {
             {/* Background Color Swatches */}
             <div>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#9CA3AF]">
                   Select Replacement Color
                 </span>
-                <span className="text-[11px] text-blue-600 font-semibold capitalize">
+                <span className="text-[11px] text-[#8B7CFF] font-semibold capitalize">
                   {COMPLIANT_BACKGROUND_COLORS.find((c) => c.hex === backgroundColor)?.name || "Custom"}
                 </span>
               </div>
@@ -859,33 +859,33 @@ export function EditorSidebar() {
                       onClick={() => setBackgroundColor(color.hex)}
                       className={`p-2.5 rounded-xl border text-left flex items-center gap-2.5 transition-all ${
                         isSelected
-                          ? "border-blue-600 bg-blue-50/50 shadow-xs ring-1 ring-blue-600"
-                          : "border-slate-200 bg-white hover:bg-slate-50"
+                          ? "border-[#8B7CFF] bg-[#1C2230] shadow-xs ring-1 ring-[#8B7CFF]"
+                          : "border-[#292F3A] bg-[#171B24] hover:bg-[#1C2230]"
                       }`}
                     >
                       <div
-                        className="w-6 h-6 rounded-lg border border-slate-300 flex-shrink-0 relative overflow-hidden"
+                        className="w-6 h-6 rounded-lg border border-[#292F3A] flex-shrink-0 relative overflow-hidden"
                         style={
                           color.hex === "transparent"
                             ? {
                                 backgroundImage:
-                                  "linear-gradient(45deg, #cbd5e1 25%, transparent 25%), linear-gradient(-45deg, #cbd5e1 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #cbd5e1 75%), linear-gradient(-45deg, transparent 75%, #cbd5e1 75%)",
+                                  "linear-gradient(45deg, #292F3A 25%, transparent 25%), linear-gradient(-45deg, #292F3A 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #292F3A 75%), linear-gradient(-45deg, transparent 75%, #292F3A 75%)",
                                 backgroundSize: "8px 8px",
                               }
                             : { backgroundColor: color.hex }
                         }
                       >
                         {isSelected && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                             <Check className="w-3.5 h-3.5 text-white" />
                           </div>
                         )}
                       </div>
                       <div className="overflow-hidden">
-                        <span className="block text-xs font-bold text-slate-800 truncate">
+                        <span className="block text-xs font-bold text-[#F5F7FA] truncate">
                           {color.name}
                         </span>
-                        <span className="block text-[10px] text-slate-400 font-mono">
+                        <span className="block text-[10px] text-[#697386] font-mono">
                           {color.hex.toUpperCase()}
                         </span>
                       </div>
@@ -896,11 +896,11 @@ export function EditorSidebar() {
             </div>
 
             {/* Custom Color Picker */}
-            <div className="pt-2 border-t border-slate-100">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-2">
+            <div className="pt-2 border-t border-[#292F3A]">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#9CA3AF] block mb-2">
                 Custom Palette Color
               </span>
-              <div className="flex items-center gap-3 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+              <div className="flex items-center gap-3 bg-[#171B24] p-2.5 rounded-xl border border-[#292F3A]">
                 <input
                   type="color"
                   value={customColorHex}
@@ -920,12 +920,12 @@ export function EditorSidebar() {
                     }
                   }}
                   placeholder="#FFFFFF"
-                  className="w-28 uppercase font-mono text-xs font-bold p-1.5 bg-white border border-slate-300 rounded-lg text-slate-800"
+                  className="w-28 uppercase font-mono text-xs font-bold p-1.5 bg-[#1C2230] border border-[#292F3A] rounded-lg text-[#F5F7FA]"
                 />
                 <button
                   type="button"
                   onClick={() => setBackgroundColor(customColorHex)}
-                  className="text-xs font-semibold text-blue-600 hover:underline ml-auto"
+                  className="text-xs font-semibold text-[#8B7CFF] hover:underline ml-auto"
                 >
                   Apply
                 </button>
@@ -946,15 +946,15 @@ export function EditorSidebar() {
       </div>
 
       {/* Sidebar Footer Actions */}
-      <div className="p-4 bg-slate-50 border-t border-slate-200 space-y-2.5">
+      <div className="p-4 bg-[#11141B] border-t border-[#292F3A] space-y-2.5">
         {/* Phase 8 Print Sheet Generator Trigger */}
         <button
           type="button"
           onClick={() => setIsPrintModalOpen(true)}
           disabled={!imageSrc}
-          className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white text-xs font-bold shadow-md shadow-blue-500/20 transition-all flex items-center justify-center gap-2 active:scale-98 disabled:opacity-50"
+          className="w-full py-2.5 px-4 rounded-xl bg-[#171B24] hover:bg-[#1C2230] border border-[#292F3A] text-[#F5F7FA] text-xs font-bold transition-all flex items-center justify-center gap-2 active:scale-98 disabled:opacity-50"
         >
-          <Printer className="w-4 h-4" />
+          <Printer className="w-4 h-4 text-[#8B7CFF]" />
           <span>Print Sheet Generator (A4, 4×6, PDF)</span>
         </button>
 
@@ -962,7 +962,7 @@ export function EditorSidebar() {
           <button
             type="button"
             onClick={replaceImage}
-            className="py-2.5 px-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+            className="py-2.5 px-3 rounded-xl border border-[#292F3A] bg-[#171B24] hover:bg-[#1C2230] text-[#F5F7FA] text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
           >
             <Upload className="w-3.5 h-3.5" />
             <span>Replace Photo</span>
@@ -972,7 +972,7 @@ export function EditorSidebar() {
             type="button"
             onClick={handleDownloadCrop}
             disabled={!imageSrc}
-            className="py-2.5 px-3 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50"
+            className="py-2.5 px-3 rounded-xl bg-[#8B7CFF] hover:bg-[#7665F5] text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shadow-md shadow-[#8B7CFF]/20 disabled:opacity-50"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Save 300 DPI</span>
@@ -983,7 +983,7 @@ export function EditorSidebar() {
           <button
             type="button"
             onClick={deleteImage}
-            className="w-full py-2 px-3 rounded-xl text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+            className="w-full py-2 px-3 rounded-xl text-[#F87171] hover:bg-[#F87171]/10 border border-transparent hover:border-[#F87171]/30 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>Delete Photo</span>
@@ -992,15 +992,17 @@ export function EditorSidebar() {
       </div>
 
       {/* AI Passport Photo Studio Guided Setup Modal */}
-      <GuidedStudioModal
-        isOpen={isStudioModalOpen}
-        onClose={() => setIsStudioModalOpen(false)}
-        photoUrl={originalImageSrc || imageSrc || "/samples/sample-man.jpg"}
-        onAcceptAndContinue={(studioRes) => {
-          applyStudioResult(studioRes);
-          setIsStudioModalOpen(false);
-        }}
-      />
+      {isStudioModalOpen && (
+        <GuidedStudioModal
+          isOpen={isStudioModalOpen}
+          onClose={() => setIsStudioModalOpen(false)}
+          photoUrl={originalImageSrc || imageSrc || "/samples/sample-man.jpg"}
+          onAcceptAndContinue={(studioRes) => {
+            applyStudioResult(studioRes);
+            setIsStudioModalOpen(false);
+          }}
+        />
+      )}
     </aside>
   );
 }

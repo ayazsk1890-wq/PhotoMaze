@@ -16,6 +16,7 @@
  */
 
 import { detectFacesInImage, FaceDetectionResult } from "@/lib/ai/faceDetector";
+import { getHardwareCapabilities } from "@/lib/ai/hardwareCapabilities";
 
 export interface DetailedSegmentationResult {
   transparentCutoutUrl: string;
@@ -24,9 +25,9 @@ export interface DetailedSegmentationResult {
 }
 
 let cachedMediaPipeSegmenter: any = null;
+let cachedTransformersModel: any = null;
+let cachedTransformersProcessor: any = null;
 
-/**
- * Initializes or reuses the MediaPipe ImageSegmenter instance.
 /**
  * Initializes or reuses the MediaPipe ImageSegmenter instance with non-blocking timeout.
  */
@@ -344,30 +345,40 @@ async function segmentWithMediaPipe(
           const maskWidth = mask.width;
           const maskHeight = mask.height;
 
+          // Adaptive working resolution to eliminate main-thread freeze and OOM on mobile
+          const maxDim = 1200;
+          let procW = width;
+          let procH = height;
+          if (width > maxDim || height > maxDim) {
+            const scale = maxDim / Math.max(width, height);
+            procW = Math.round(width * scale);
+            procH = Math.round(height * scale);
+          }
+
           const canvas = document.createElement("canvas");
-          canvas.width = width;
-          canvas.height = height;
+          canvas.width = procW;
+          canvas.height = procH;
           const ctx = canvas.getContext("2d");
           if (!ctx) throw new Error("Could not initialize 2D canvas context");
 
-          ctx.drawImage(img, 0, 0, width, height);
-          const imgData = ctx.getImageData(0, 0, width, height);
+          ctx.drawImage(img, 0, 0, procW, procH);
+          const imgData = ctx.getImageData(0, 0, procW, procH);
           const data = imgData.data;
 
           onProgress?.("Applying sub-pixel bilinear sampling & hair matting...", 75);
 
-          const totalPixels = width * height;
+          const totalPixels = procW * procH;
           const initialAlpha = new Float32Array(totalPixels);
           const guideLum = new Float32Array(totalPixels);
 
-          const scaleX = (maskWidth - 1) / Math.max(1, width - 1);
-          const scaleY = (maskHeight - 1) / Math.max(1, height - 1);
+          const scaleX = (maskWidth - 1) / Math.max(1, procW - 1);
+          const scaleY = (maskHeight - 1) / Math.max(1, procH - 1);
 
           // 1. Bilinear sampling of mask + guide luminance extraction
-          for (let y = 0; y < height; y++) {
+          for (let y = 0; y < procH; y++) {
             const v = y * scaleY;
-            const rowOffset = y * width;
-            for (let x = 0; x < width; x++) {
+            const rowOffset = y * procW;
+            for (let x = 0; x < procW; x++) {
               const u = x * scaleX;
               const idx = (rowOffset + x) * 4;
 
@@ -395,11 +406,11 @@ async function segmentWithMediaPipe(
           onProgress?.("Refining fine hair strands via guided filter...", 88);
 
           // 2. Guided Filter edge refinement
-          const refinedAlpha = refineAlphaWithGuide(guideLum, initialAlpha, width, height, 3, 0.008);
+          const refinedAlpha = refineAlphaWithGuide(guideLum, initialAlpha, procW, procH, 3, 0.008);
 
           // 3. Sample background color for decontamination (anti-halo/defringing)
           let bgR = 240, bgG = 240, bgB = 240, bgCount = 0;
-          for (let x = 0; x < width; x += 10) {
+          for (let x = 0; x < procW; x += 10) {
             const idx = x * 4;
             bgR += data[idx]; bgG += data[idx + 1]; bgB += data[idx + 2];
             bgCount++;
@@ -410,13 +421,13 @@ async function segmentWithMediaPipe(
 
           // 4. Create Mask Canvas (Grayscale for debug inspector)
           const maskCanvas = document.createElement("canvas");
-          maskCanvas.width = width;
-          maskCanvas.height = height;
+          maskCanvas.width = procW;
+          maskCanvas.height = procH;
           const maskCtx = maskCanvas.getContext("2d");
-          const maskImgData = maskCtx?.createImageData(width, height);
+          const maskImgData = maskCtx?.createImageData(procW, procH);
 
           // 5. Apply Alpha & Color Decontamination
-          decontaminateAlphaEdges(data, refinedAlpha, width, height, bgR, bgG, bgB);
+          decontaminateAlphaEdges(data, refinedAlpha, procW, procH, bgR, bgG, bgB);
 
           if (maskImgData) {
             for (let i = 0; i < totalPixels; i++) {
@@ -462,16 +473,43 @@ async function segmentWithTransformers(
   imageSrc: string,
   onProgress?: (stage: string, percent: number) => void
 ): Promise<DetailedSegmentationResult> {
-  onProgress?.("Loading Transformers.js neural model...", 25);
+  const caps = await getHardwareCapabilities();
+  const device = caps.provider === "webgpu" ? "webgpu" : "wasm";
+  const dtype = caps.provider === "webgpu" ? "fp32" : "q8";
+
+  onProgress?.(`Loading Transformers.js neural model (${device.toUpperCase()})...`, 25);
   const { AutoModel, AutoProcessor, RawImage, env } = await import(
     "@huggingface/transformers"
   );
   env.allowLocalModels = false;
 
   const model_id = "briaai/RMBG-1.4";
-  const model = await AutoModel.from_pretrained(model_id);
-  const processor = await (AutoProcessor as any).from_pretrained(model_id, {});
-  const img = await RawImage.fromURL(imageSrc);
+
+  if (!cachedTransformersModel || !cachedTransformersProcessor) {
+    onProgress?.("Downloading RMBG-1.4 model weights...", 35);
+    cachedTransformersModel = await AutoModel.from_pretrained(model_id, {
+      device,
+      dtype,
+      progress_callback: (item: any) => {
+        if (item && item.status === "progress" && item.progress) {
+          const pct = Math.round(item.progress);
+          onProgress?.(`Downloading RMBG-1.4 weights (${pct}%)...`, 35 + Math.round(pct * 0.25));
+        }
+      },
+    });
+    cachedTransformersProcessor = await (AutoProcessor as any).from_pretrained(model_id, {});
+  }
+
+  const model = cachedTransformersModel;
+  const processor = cachedTransformersProcessor;
+
+  onProgress?.("Processing image tensor...", 65);
+  let img = await RawImage.fromURL(imageSrc);
+  if (img.width > 1200 || img.height > 1200) {
+    const scale = 1200 / Math.max(img.width, img.height);
+    img = await img.resize(Math.round(img.width * scale), Math.round(img.height * scale));
+  }
+
   const { pixel_values } = await processor(img);
 
   onProgress?.("Extracting neural alpha mask...", 80);

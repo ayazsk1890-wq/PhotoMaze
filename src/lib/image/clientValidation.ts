@@ -51,7 +51,9 @@ export function validateImageFile(file: File): FileValidationResult {
 export function loadImageDimensions(src: string): Promise<{ width: number; height: number }> {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.crossOrigin = "anonymous";
+    if (!src.startsWith("data:") && !src.startsWith("blob:")) {
+      img.crossOrigin = "anonymous";
+    }
     img.onload = () => {
       resolve({ width: img.naturalWidth || img.width, height: img.naturalHeight || img.height });
     };
@@ -59,6 +61,9 @@ export function loadImageDimensions(src: string): Promise<{ width: number; heigh
       reject(new Error("Failed to load image dimensions."));
     };
     img.src = src;
+    if (img.complete && img.naturalWidth > 0) {
+      resolve({ width: img.naturalWidth, height: img.naturalHeight });
+    }
   });
 }
 

@@ -154,8 +154,8 @@ export async function runStudioPipeline(
     throw new Error("Unable to create canvas context");
   }
 
-  // Draw transparent cutout subject
-  sCtx.drawImage(cutoutImg, 0, 0);
+  // Draw transparent cutout subject scaled to match coordinate system
+  sCtx.drawImage(cutoutImg, 0, 0, naturalWidth, naturalHeight);
 
   // If in Studio Appearance mode with clothing change selected, apply attire under face
   if (

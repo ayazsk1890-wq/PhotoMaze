@@ -1,76 +1,78 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const faqs = [
     {
-      question: "Will these photos be accepted by official passport offices and embassies?",
+      question: "Are these photos designed for official passport and visa submissions?",
       answer:
-        "Yes, absolutely. Our system is rigorously programmed to adhere to ICAO Document 9303 and ISO/IEC 19794-5 biometric international standards. We enforce exact millimeter dimensions, correct chin-to-crown head ratios (typically 70%-80%), centered eye levels, and compliant solid backdrops (pure white or off-white depending on the country). We back this with a 100% acceptance guarantee.",
+        "Yes. PhotoMaze is calibrated to adhere to international ICAO Document 9303 biometric parameters, including 35×45mm or 2×2 inch millimeter geometry, 70% to 80% chin-to-crown head ratios, eye plane horizontal alignment, and solid white or off-white backgrounds. Final acceptance always remains subject to the discretion of the issuing government authority or consular officer.",
     },
     {
-      question: "How should I take my selfie for the best results?",
+      question: "How should I capture my photograph for best results?",
       answer:
-        "Stand about 4 to 6 feet away from the camera in a room with even, balanced lighting. Keep a neutral facial expression (closed mouth, natural eyes looking directly at the camera lens). Remove eyeglasses to prevent glare or frame shadow, and ensure hair does not cover your eyes, eyebrows, or face contours.",
+        "Stand 4 to 6 feet away in an evenly lit room without strong shadows behind your ears or neck. Keep a neutral facial expression with mouth closed and eyes looking straight into the lens. Ensure hair does not obscure your eyes, eyebrows, or face contours.",
     },
     {
-      question: "How do I print the 4×6\" photo sheet at a local pharmacy or photo kiosk?",
+      question: "What are the rules regarding spectacles and head coverings?",
       answer:
-        "When you download the 4×6\" (10×15 cm) print sheet, save it to your phone or USB drive. Take it to any photo kiosk (such as Walgreens, CVS, Walmart, Boots, or a local photo studio) and print it as a standard 4×6\" photographic print (usually costs $0.35 or ₹5-₹10). Then use scissors to cut along the dotted guide lines to obtain 6 perfectly sized passport photos.",
+        "Most passport authorities (including the US and India) require eyeglasses to be removed to prevent glare and frame shadows. For religious head coverings (such as hijabs or turbans), the full oval of the face from chin bottom to forehead top must remain completely unobstructed without shadows.",
     },
     {
-      question: "What file formats and image resolutions will I receive?",
+      question: "How do I print the 4×6 inch photo sheet?",
       answer:
-        "You receive both a single digital photo (high-resolution PNG and compressed JPEG under 240 KB calibrated for online visa portal uploads like the US CEAC or Indian Passport Seva portal) and a print-ready vector PDF / 300 DPI image sheet for physical printing.",
+        "Download the 4×6 inch (10×15 cm) print sheet containing 6 copies. Save it to your phone or flash drive and print it as a standard 4×6 photo print at any local pharmacy kiosk or home photo printer for pennies. Use scissors to cut along the corner guidelines.",
     },
     {
-      question: "How does the AI formal suit changer work?",
+      question: "Is PhotoMaze truly 100% free with no hidden charges?",
       answer:
-        "If you took your photo in casual home clothes, our AI clothing replacement tool detects your neck and collar boundaries, removes the casual clothing, and seamlessly fits high-resolution formal suits, collared dress shirts, or blazers for men, women, and children.",
+        "Yes, 100% free forever. There are no subscriptions, credits, watermarks, or paywalls. All AI image processing occurs locally in your web browser, which eliminates server compute expenses and allows us to offer the service without cost.",
     },
     {
-      question: "Is PhotoMaze really 100% free to use?",
+      question: "Is my personal photo uploaded to external cloud servers?",
       answer:
-        "Yes, absolutely. PhotoMaze is completely free. You can edit unlimited photos, remove backgrounds, crop to official dimensions, generate printable sheets, and download high-resolution 300 DPI files with zero watermarks, zero subscriptions, and zero sign-up required.",
+        "No. PhotoMaze runs neural segmentation, biometric cropping, and portrait retouching locally in your browser using WebGPU and WebAssembly. Your photos stay strictly on your device.",
     },
   ];
 
   return (
-    <section id="faq" className="py-16 sm:py-24 bg-slate-50/70 border-t border-slate-200/80">
+    <section id="faq" className="py-20 sm:py-28 bg-[#0B0D12] border-t border-[#292F3A]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+        <div className="text-center mb-14">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#8B7CFF] mb-2 block">
             Got Questions?
           </span>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#F5F7FA]">
             Frequently Asked Questions
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-slate-600">
-            Everything you need to know about taking, generating, and printing passport photos.
+          <p className="mt-3 text-sm sm:text-base text-[#9CA3AF]">
+            Everything you need to know about biometric standards, printing, and privacy.
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
               <div
                 key={faq.question}
-                className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden transition-all duration-200"
+                className="rounded-2xl bg-[#11141B] border border-[#292F3A] overflow-hidden transition-colors"
               >
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 font-bold text-slate-900 hover:text-blue-600 transition-colors"
+                  className="w-full flex items-center justify-between p-5 text-left transition-colors hover:bg-[#171B24]"
                 >
-                  <span className="text-base sm:text-lg">{faq.question}</span>
+                  <span className="text-sm sm:text-base font-semibold text-[#F5F7FA] pr-4">
+                    {faq.question}
+                  </span>
                   <div
-                    className={`w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0 transition-transform duration-200 ${
-                      isOpen ? "rotate-180 bg-blue-50 text-blue-600" : "text-slate-500"
+                    className={`w-6 h-6 rounded-lg bg-[#171B24] border border-[#292F3A] flex items-center justify-center text-[#9CA3AF] transition-transform duration-200 flex-shrink-0 ${
+                      isOpen ? "rotate-180 text-[#8B7CFF]" : ""
                     }`}
                   >
                     <ChevronDown className="w-4 h-4" />
@@ -78,7 +80,7 @@ export function FAQSection() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-6 sm:px-6 text-sm sm:text-base text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-[#9CA3AF] leading-relaxed border-t border-[#292F3A]/60">
                     {faq.answer}
                   </div>
                 )}
@@ -90,4 +92,3 @@ export function FAQSection() {
     </section>
   );
 }
-
