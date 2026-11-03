@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: photomaze
+    runtime: node
+    plan: free
+    branch: main
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: AI_BG_REMOVAL_PROVIDER
+        value: client_webgpu
+      - key: NEXT_PUBLIC_APP_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: PHOTOROOM_API_KEY
+        sync: false
+      - key: REPLICATE_API_TOKEN
+        sync: false
