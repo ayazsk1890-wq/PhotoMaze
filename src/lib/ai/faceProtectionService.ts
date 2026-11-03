@@ -37,8 +37,14 @@ export function generateProtectedFaceLayers(
   face: DetectedFace,
   headCovering: HeadCoveringPreference = "none"
 ): ProtectedFaceMaskResult {
-  const width = sourceImage.width;
-  const height = sourceImage.height;
+  const width =
+    ("naturalWidth" in sourceImage && sourceImage.naturalWidth)
+      ? sourceImage.naturalWidth
+      : sourceImage.width || 800;
+  const height =
+    ("naturalHeight" in sourceImage && sourceImage.naturalHeight)
+      ? sourceImage.naturalHeight
+      : sourceImage.height || 1000;
 
   // 1. Create Face Mask Canvas
   const maskCanvas = document.createElement("canvas");

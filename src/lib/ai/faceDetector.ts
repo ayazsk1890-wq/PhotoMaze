@@ -57,9 +57,9 @@ export interface FaceDetectionResult {
 let cachedLandmarker: any = null;
 
 /**
- * Initializes or reuses the MediaPipe FaceLandmarker instance.
+ * Initializes or reuses the MediaPipe FaceLandmarker instance with non-blocking timeout.
  */
-async function getFaceLandmarker() {
+async function getFaceLandmarkerInternal() {
   if (cachedLandmarker) return cachedLandmarker;
 
   try {
@@ -68,30 +68,25 @@ async function getFaceLandmarker() {
       "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
     );
 
-    cachedLandmarker = await FaceLandmarker.createFromOptions(vision, {
-      baseOptions: {
-        modelAssetPath:
-          "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
-        delegate: "GPU",
-      },
-      runningMode: "IMAGE",
-      numFaces: 2,
-      minFaceDetectionConfidence: 0.5,
-      minFacePresenceConfidence: 0.5,
-      minTrackingConfidence: 0.5,
-      outputFaceBlendshapes: false,
-      outputFacialTransformationMatrixes: false,
-    });
-
-    return cachedLandmarker;
-  } catch (err) {
-    console.warn("MediaPipe GPU initialization failed, falling back to CPU delegate...", err);
     try {
-      const { FaceLandmarker, FilesetResolver } = await import("@mediapipe/tasks-vision");
-      const vision = await FilesetResolver.forVisionTasks(
-        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
-      );
+      cachedLandmarker = await FaceLandmarker.createFromOptions(vision, {
+        baseOptions: {
+          modelAssetPath:
+            "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+          delegate: "GPU",
+        },
+        runningMode: "IMAGE",
+        numFaces: 2,
+        minFaceDetectionConfidence: 0.5,
+        minFacePresenceConfidence: 0.5,
+        minTrackingConfidence: 0.5,
+        outputFaceBlendshapes: false,
+        outputFacialTransformationMatrixes: false,
+      });
 
+      return cachedLandmarker;
+    } catch (gpuErr) {
+      console.warn("MediaPipe GPU initialization failed, falling back to CPU delegate...", gpuErr);
       cachedLandmarker = await FaceLandmarker.createFromOptions(vision, {
         baseOptions: {
           modelAssetPath:
@@ -103,10 +98,34 @@ async function getFaceLandmarker() {
       });
 
       return cachedLandmarker;
-    } catch (cpuErr) {
-      console.warn("MediaPipe FaceLandmarker could not be initialized from CDN:", cpuErr);
-      return null;
     }
+  } catch (err) {
+    console.warn("MediaPipe FaceLandmarker could not be initialized:", err);
+    return null;
+  }
+}
+
+/**
+ * Initializes FaceLandmarker with a hard timeout (default: 3000ms).
+ * Ensures that CDN delays or model download pauses never freeze the studio.
+ */
+export async function getFaceLandmarker(timeoutMs = 3000): Promise<any> {
+  let timer: any;
+  const timeoutPromise = new Promise<null>((resolve) => {
+    timer = setTimeout(() => {
+      console.warn(`MediaPipe initialization exceeded ${timeoutMs}ms; using instant biometric heuristics.`);
+      resolve(null);
+    }, timeoutMs);
+  });
+
+  try {
+    const result = await Promise.race([getFaceLandmarkerInternal(), timeoutPromise]);
+    clearTimeout(timer);
+    return result;
+  } catch (err) {
+    clearTimeout(timer);
+    console.warn("FaceLandmarker load failed:", err);
+    return null;
   }
 }
 
@@ -136,7 +155,7 @@ export async function detectFacesInImage(
   }
 
   try {
-    const landmarker = await getFaceLandmarker();
+    const landmarker = await getFaceLandmarker(3000);
     if (landmarker) {
       const results = landmarker.detect(imageElement);
       if (results && results.faceLandmarks && results.faceLandmarks.length > 0) {
@@ -307,7 +326,7 @@ function mapMediaPipeLandmarksToFace(
  * Algorithmic Heuristic Fallback Face Estimator
  * Evaluates center-third facial geometry when offline.
  */
-function computeHeuristicFallbackFace(
+export function computeHeuristicFallbackFace(
   _element: HTMLImageElement | HTMLCanvasElement,
   imgWidth: number,
   imgHeight: number

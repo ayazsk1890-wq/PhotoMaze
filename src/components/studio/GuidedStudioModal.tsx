@@ -197,9 +197,18 @@ export function GuidedStudioModal({
     };
 
     try {
-      const generated = await runStudioPipeline(activePhotoUrl, selections, (prog) => {
+      // 25-second maximum watchdog timer ensuring the modal never hangs indefinitely
+      const pipelinePromise = runStudioPipeline(activePhotoUrl, selections, (prog) => {
         setProgress(prog);
       });
+      const watchdogPromise = new Promise<never>((_, reject) =>
+        setTimeout(
+          () => reject(new Error("AI Studio generation timed out. Please try again with fast mode.")),
+          25000
+        )
+      );
+
+      const generated = await Promise.race([pipelinePromise, watchdogPromise]);
       setHistoryResult(result);
       setResult(generated);
       setCurrentStep(8); // Preview Screen
@@ -961,6 +970,16 @@ export function GuidedStudioModal({
 
               <div className="text-xs text-slate-400 font-mono">
                 {progress?.percent || 20}% Completed • Non-blocking client execution
+              </div>
+
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={() => setCurrentStep(6)}
+                  className="text-xs text-slate-500 hover:text-slate-300 underline transition-colors"
+                >
+                  Cancel and adjust settings
+                </button>
               </div>
             </div>
           )}

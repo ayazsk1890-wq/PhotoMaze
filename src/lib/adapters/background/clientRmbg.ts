@@ -27,8 +27,10 @@ let cachedMediaPipeSegmenter: any = null;
 
 /**
  * Initializes or reuses the MediaPipe ImageSegmenter instance.
+/**
+ * Initializes or reuses the MediaPipe ImageSegmenter instance with non-blocking timeout.
  */
-async function getMediaPipeSegmenter() {
+async function getMediaPipeSegmenterInternal() {
   if (cachedMediaPipeSegmenter) return cachedMediaPipeSegmenter;
 
   try {
@@ -69,16 +71,64 @@ async function getMediaPipeSegmenter() {
   }
 }
 
+async function getMediaPipeSegmenter(timeoutMs = 3500): Promise<any> {
+  let timer: any;
+  const timeoutPromise = new Promise<null>((resolve) => {
+    timer = setTimeout(() => {
+      console.warn(`MediaPipe segmenter initialization exceeded ${timeoutMs}ms; using fast biometric matting.`);
+      resolve(null);
+    }, timeoutMs);
+  });
+
+  try {
+    const result = await Promise.race([getMediaPipeSegmenterInternal(), timeoutPromise]);
+    clearTimeout(timer);
+    return result;
+  } catch {
+    clearTimeout(timer);
+    return null;
+  }
+}
+
 /**
- * Loads an image from a data URL or image source into an HTMLImageElement.
+ * Loads an image from a data URL or image source into an HTMLImageElement safely.
  */
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error("Failed to load image for background removal"));
+    if (!src.startsWith("data:") && !src.startsWith("blob:")) {
+      img.crossOrigin = "anonymous";
+    }
+
+    let resolved = false;
+    const timer = setTimeout(() => {
+      if (!resolved) {
+        resolved = true;
+        reject(new Error("Failed to load image: timed out after 8s"));
+      }
+    }, 8000);
+
+    img.onload = () => {
+      if (!resolved) {
+        resolved = true;
+        clearTimeout(timer);
+        resolve(img);
+      }
+    };
+    img.onerror = () => {
+      if (!resolved) {
+        resolved = true;
+        clearTimeout(timer);
+        reject(new Error("Failed to load image for background removal"));
+      }
+    };
     img.src = src;
+
+    if (img.complete && img.naturalWidth > 0) {
+      resolved = true;
+      clearTimeout(timer);
+      resolve(img);
+    }
   });
 }
 
@@ -271,8 +321,19 @@ async function segmentWithMediaPipe(
   onProgress?.("Segmenting subject & isolating hair boundaries...", 60);
 
   return new Promise((resolve, reject) => {
+    let resolved = false;
+    const timer = setTimeout(() => {
+      if (!resolved) {
+        resolved = true;
+        reject(new Error("MediaPipe segmentation timed out after 4 seconds"));
+      }
+    }, 4000);
+
     try {
       segmenter.segment(img, (result: any) => {
+        if (resolved) return;
+        resolved = true;
+        clearTimeout(timer);
         try {
           if (!result || !result.confidenceMasks || result.confidenceMasks.length === 0) {
             throw new Error("No confidence mask returned by MediaPipe");
