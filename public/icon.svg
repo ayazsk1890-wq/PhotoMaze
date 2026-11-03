@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="pm-icon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="60%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#7C3AED" />
+    </linearGradient>
+  </defs>
+
+  <!-- Full Bleed Square with Soft Corner for Android Adaptive Icon -->
+  <rect width="512" height="512" fill="url(#pm-icon-grad)" />
+
+  <!-- Shutter & Biometric Crop Marks -->
+  <g transform="translate(256, 240)" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.45">
+    <circle r="130" stroke-opacity="0.3" />
+    <path d="M -120,-80 L -120,-110 L -90,-110" />
+    <path d="M  120,-80 L  120,-110 L  90,-110" />
+    <path d="M -120, 80 L -120, 110 L -90, 110" />
+    <path d="M  120, 80 L  120, 110 L  90, 110" />
+  </g>
+
+  <!-- Biometric Portrait Silhouette -->
+  <g transform="translate(256, 250)">
+    <circle cx="0" cy="-48" r="58" fill="#FFFFFF" />
+    <path d="M -20,10 L -20,34 L 20,34 L 20,10 Z" fill="#FFFFFF" opacity="0.95" />
+    <path d="M -102,118 C -102,58 -60,34 0,34 C 60,34 102,58 102,118 Z" fill="#FFFFFF" />
+    <circle cx="64" cy="-94" r="16" fill="#38BDF8" />
+  </g>
+</svg>
+

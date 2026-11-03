@@ -1,0 +1,18 @@
+{
+  "name": "PhotoMaze - Free Biometric Passport Photo Maker",
+  "short_name": "PhotoMaze",
+  "description": "100% Free AI biometric passport, visa & ID photo studio. Create compliant 35x45mm Indian photos, US 2x2, and global print sheets.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#2563EB",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
+
